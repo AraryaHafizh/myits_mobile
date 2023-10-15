@@ -1,0 +1,26 @@
+{
+  "1": {
+    "class": "Intro to Programming",
+    "room": "Tower 2 101",
+    "lecture": "Dosen 1",
+    "time": "08:00"
+  },
+  "2": {
+    "class": "Data Structures",
+    "room": "Tower 3 201",
+    "lecture": "Dosen 2",
+    "time": "10:00"
+  },
+  "3": {
+    "class": "Mobile App Development",
+    "room": "Tower 1 301",
+    "lecture": "Dosen 3",
+    "time": "13:30"
+  },
+  "4": {
+    "class": "Web Development",
+    "room": "Tower 4 401",
+    "lecture": "Dosen 4",
+    "time": "15:00"
+  }
+}

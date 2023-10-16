@@ -32,71 +32,79 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      // backgroundColor: defaultBG,
-      appBar: appBarHandler(),
-      body: FutureBuilder<bool>(
-        future: SharedPreferences.getInstance()
-            .then((prefs) => prefs.getBool('islogin') ?? false),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            final isLogin = snapshot.data ?? false;
-            if (isLogin) {
-              return FutureBuilder<int>(
-                  future: SharedPreferences.getInstance()
-                      .then((prefs) => prefs.getInt('nrp')!),
-                  builder: (context, nrpSnapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError || nrpSnapshot.data == null) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Error: ${nrpSnapshot.error}'),
-                        ],
-                      );
-                    } else {
-                      final nrp = nrpSnapshot.data!;
-
-                      return <Widget>[
-                        homePage(nrp),
-                        const AgendaPage(),
-                        const Announcement(),
-                        AccountPage(
-                          nrp: nrp,
-                        ),
-                      ][currentPageIndex];
-                    }
-                  });
-            } else {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Your session is expired.'),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                            builder: (context) =>
-                                LoginPage(), // Arahkan ke LoginPage
-                          ));
-                        },
-                        child: Text('Login'))
-                  ],
-                ),
-              );
-            }
-          }
-        },
+    return Center(
+      child: SizedBox(
+        width: 510,
+        child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          // backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: appBarHandler(),
+          body: FutureBuilder<bool>(
+            future: SharedPreferences.getInstance()
+                .then((prefs) => prefs.getBool('islogin') ?? false),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final isLogin = snapshot.data ?? false;
+                if (isLogin) {
+                  return FutureBuilder<int>(
+                      future: SharedPreferences.getInstance()
+                          .then((prefs) => prefs.getInt('nrp')!),
+                      builder: (context, nrpSnapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError ||
+                            nrpSnapshot.data == null) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Error: ${nrpSnapshot.error}'),
+                            ],
+                          );
+                        } else {
+                          final nrp = nrpSnapshot.data!;
+      
+                          return <Widget>[
+                            homePage(nrp),
+                            const AgendaPage(),
+                            const Announcement(),
+                            AccountPage(
+                              nrp: nrp,
+                            ),
+                          ][currentPageIndex];
+                        }
+                      });
+                } else {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Your session is expired.'),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (context) =>
+                                    LoginPage(), // Arahkan ke LoginPage
+                              ));
+                            },
+                            child: Text('Login'))
+                      ],
+                    ),
+                  );
+                }
+              }
+            },
+          ),
+          bottomNavigationBar: navBar(),
+          floatingActionButton: msgButton(context),
+        ),
       ),
-      bottomNavigationBar: navBar(),
-      floatingActionButton: msgButton(context),
     );
   }
 
@@ -105,7 +113,7 @@ class _HomePageState extends State<HomePage> {
   appBarHandler() {
     return AppBar(
       elevation: 0,
-      backgroundColor: defaultBG,
+      backgroundColor: Theme.of(context).colorScheme.background,
       scrolledUnderElevation: 0.0,
       automaticallyImplyLeading: false,
       title: Container(
@@ -116,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                 'assets/images/myits_w.png',
                 width: 65,
                 height: 65,
-                color: itsLogo,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
             ],
           )),
@@ -145,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                         width: MediaQuery.of(context).size.width - 35,
                         child: CarouselSlider(
                             items: [
-                              nameCard(nrp),
+                              nameCard(nrp, context),
                               ...dataBanner
                                   .map((data) => loadBanners(data))
                                   .toList(),
@@ -169,7 +177,9 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: MediaQuery.of(context).size.width - 35,
                       height: MediaQuery.of(context).size.height - 325,
-                      decoration: cardsContainer.copyWith(color: containerBG),
+                      decoration: cardsContainer.copyWith(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
                       child: Container(
                           margin: const EdgeInsets.only(
                               top: 20, left: 20, right: 20),
@@ -178,14 +188,13 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    'Today Classes',
-                                    style: jakarta.copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w900,
-                                      color: black38,
-                                    ),
-                                  ),
+                                  Text('Today Classes',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 18)),
                                 ],
                               ),
                               const SizedBox(
@@ -213,11 +222,12 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text('Quick Apps',
-                                        style: jakarta.copyWith(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w900,
-                                          color: black38,
-                                        )),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w900,
+                                                fontSize: 18)),
                                     const Spacer(),
                                     InkWell(
                                         onTap: () {
@@ -225,11 +235,12 @@ class _HomePageState extends State<HomePage> {
                                           botSheetEdit();
                                         },
                                         child: Text('Edit >',
-                                            style: jakarta.copyWith(
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 12,
-                                              color: black38,
-                                            )))
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w900)))
                                   ],
                                 ),
                               ),
@@ -259,7 +270,8 @@ class _HomePageState extends State<HomePage> {
                                         if (index == favApp.length) {
                                           return openAll();
                                         } else {
-                                          return appListMaker(favApp[index]);
+                                          return appListMaker(
+                                              favApp[index], context);
                                         }
                                       },
                                     ),
@@ -288,7 +300,7 @@ class _HomePageState extends State<HomePage> {
         },
         child: Ink(
           decoration: BoxDecoration(
-            color: containerWhite,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -301,11 +313,10 @@ class _HomePageState extends State<HomePage> {
               ),
               Text(
                 'All Apps',
-                style: jakarta.copyWith(
-                  color: itsBlue,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 10),
               ),
             ],
           ),
@@ -319,7 +330,7 @@ class _HomePageState extends State<HomePage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double desiredHeight = 0.83 * screenHeight;
     return showModalBottomSheet(
-        backgroundColor: defaultBG,
+        backgroundColor: Theme.of(context).colorScheme.background,
         context: context,
         isScrollControlled: true,
         showDragHandle: true,
@@ -347,7 +358,7 @@ class _HomePageState extends State<HomePage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double desiredHeight = 0.83 * screenHeight;
     return showModalBottomSheet(
-        backgroundColor: defaultBG,
+        backgroundColor: Theme.of(context).colorScheme.background,
         context: context,
         isScrollControlled: true,
         showDragHandle: true,
@@ -362,7 +373,7 @@ class _HomePageState extends State<HomePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Text('Choose 5 applications to be favorite.'),
+                  const Text('Choose 5 applications to be favorite.'),
                   Column(
                     children: getTags(context).map((tag) {
                       return appByTag(tag);
@@ -386,11 +397,10 @@ class _HomePageState extends State<HomePage> {
       children: [
         Text(
           tags,
-          style: jakarta.copyWith(
-            fontSize: 16,
-            fontWeight: FontWeight.w900,
-            color: black,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.w900, fontSize: 16),
         ),
         const SizedBox(height: 10),
         Container(
@@ -407,7 +417,7 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (BuildContext context, index) {
               int idx = int.parse(appKeys[index]);
               // debugPrint(idx.toString());
-              return appListMaker(idx);
+              return appListMaker(idx, context);
             },
           ),
         ),
@@ -421,8 +431,10 @@ class _HomePageState extends State<HomePage> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       height: 90,
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(20), color: white),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.secondaryContainer,
+      ),
       child: Row(
         children: [
           SizedBox(
@@ -431,20 +443,9 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    data['time'],
-                    style: jakarta.copyWith(
-                      fontSize: 14,
-                      color: itsBlue,
-                    ),
-                  ),
-                  Text(
-                    'WIB',
-                    style: jakarta.copyWith(
-                      color: black38,
-                      fontSize: 12,
-                    ),
-                  )
+                  Text(data['time'],
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  Text('WIB', style: Theme.of(context).textTheme.bodySmall)
                 ]),
           ),
           Container(
@@ -452,19 +453,14 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
                 border: Border(
                     left: BorderSide(
-              color: containerBG,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ))),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${data['class']}',
-                    style: jakarta.copyWith(
-                        color: itsBlue,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14),
-                  ),
+                  Text('${data['class']}',
+                      style: Theme.of(context).textTheme.bodyMedium),
                   const SizedBox(
                     height: 5,
                   ),
@@ -473,17 +469,17 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(
                         Icons.location_pin,
-                        color: black38,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         size: 15,
                       ),
                       const SizedBox(
                         width: 2,
                       ),
                       Text(data['room'],
-                          style: jakarta.copyWith(
-                              color: black38,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontWeight: FontWeight.w500)),
                     ],
                   ),
                   Row(
@@ -491,17 +487,17 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Icon(
                         Icons.person,
-                        color: black38,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         size: 15,
                       ),
                       const SizedBox(
                         width: 2,
                       ),
                       Text(data['lecture'],
-                          style: jakarta.copyWith(
-                              color: black38,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ]),
@@ -515,47 +511,51 @@ class _HomePageState extends State<HomePage> {
 
   Widget navBar() {
     return NavigationBar(
-      backgroundColor: defaultBG,
-      surfaceTintColor: defaultBG,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
       onDestinationSelected: (int index) {
         setState(() {
           currentPageIndex = index;
         });
       },
       labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-      indicatorColor: itsBlueShade,
-      shadowColor: itsBlueShade,
+      indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
+      shadowColor: Theme.of(context).navigationBarTheme.indicatorColor,
       selectedIndex: currentPageIndex,
       destinations: <Widget>[
         NavigationDestination(
-          selectedIcon: Icon(Icons.school, color: black),
+          selectedIcon:
+              Icon(Icons.school, color: Theme.of(context).iconTheme.color),
           icon: Icon(
             Icons.school_outlined,
-            color: black,
+            color: Theme.of(context).iconTheme.color,
           ),
           label: 'home',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.view_agenda, color: black),
+          selectedIcon:
+              Icon(Icons.view_agenda, color: Theme.of(context).iconTheme.color),
           icon: Icon(
             Icons.view_agenda_outlined,
-            color: black,
+            color: Theme.of(context).iconTheme.color,
           ),
           label: 'Agenda',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.notifications, color: black),
+          selectedIcon: Icon(Icons.notifications,
+              color: Theme.of(context).iconTheme.color),
           icon: Icon(
             Icons.notifications_none,
-            color: black,
+            color: Theme.of(context).iconTheme.color,
           ),
           label: 'announcements',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.account_circle_rounded, color: black),
+          selectedIcon: Icon(Icons.account_circle_rounded,
+              color: Theme.of(context).iconTheme.color),
           icon: Icon(
             Icons.account_circle_outlined,
-            color: black,
+            color: Theme.of(context).iconTheme.color,
           ),
           label: 'account',
         ),

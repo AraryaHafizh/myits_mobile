@@ -37,29 +37,34 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: itsBlueStatic,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/its.png',
-              width: 160,
-              height: 160,
+      body: Center(
+        child: SizedBox(
+          width: 510,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 45),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/its.png',
+                  width: 160,
+                  height: 160,
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+                nrpField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                passwordField(),
+                options(),
+                loginButton(),
+                const SizedBox(height: 55),
+                credit(false, context)
+              ],
             ),
-            const SizedBox(
-              height: 22,
-            ),
-            nrpField(),
-            const SizedBox(
-              height: 15,
-            ),
-            passwordField(),
-            options(),
-            loginButton(),
-            const SizedBox(height: 55),
-            credit(false)
-          ],
+          ),
         ),
       ),
     );
@@ -76,7 +81,8 @@ class _LoginPageState extends State<LoginPage> {
       ],
       keyboardType: TextInputType.number,
       decoration: loginTheme.copyWith(
-          labelText: 'NRP', labelStyle: jakarta.copyWith(fontSize: 14, color: whiteStatic)),
+          labelText: 'NRP',
+          labelStyle: jakarta.copyWith(fontSize: 14, color: whiteStatic)),
     );
   }
 
@@ -157,14 +163,14 @@ class _LoginPageState extends State<LoginPage> {
                 width: 220,
                 height: 37,
                 child: Text('Silahkan cek kembali NRP dan Password anda.',
-                    style: jakarta.copyWith(fontSize:14, color: black)),
+                    style: jakarta.copyWith(fontSize: 14, color: black)),
               ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     'OK',
-                    style: jakarta.copyWith(fontSize:14, color: itsBlue),
+                    style: jakarta.copyWith(fontSize: 14, color: itsBlue),
                   ),
                 )
               ],

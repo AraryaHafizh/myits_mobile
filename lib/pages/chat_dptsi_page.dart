@@ -27,23 +27,25 @@ class OpenChat extends StatelessWidget {
                   children: [
                     Text(
                       'DPTSI ITS',
-                      style: jakarta.copyWith(fontSize:14, fontWeight: FontWeight.w600),
+                      style: jakarta.copyWith(
+                          fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                     Text(
                       'Online',
-                      style: jakarta.copyWith(fontSize:14, 
-                          fontWeight: FontWeight.w100, color: Colors.green),
+                      style: jakarta.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.green),
                     ),
                   ],
                 ),
                 const Spacer(),
                 IconButton.filledTonal(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.close_rounded),
-                  style: TextButton.styleFrom(backgroundColor: Colors.black12),
-                )
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.close_rounded,
+                        color: Theme.of(context).colorScheme.onPrimary))
               ],
             ),
           ),
@@ -62,17 +64,16 @@ class OpenChat extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Ask a question...',
-                    hintStyle: jakarta.copyWith(fontSize: 14, color: containerBG),
+                    hintStyle:
+                        jakarta.copyWith(fontSize: 14, color: containerBG),
                     border: InputBorder.none,
                   ),
                 ),
               ),
               IconButton(
                   onPressed: () {},
-                  icon: const Icon(
-                    Icons.send_rounded,
-                    color: Colors.black38,
-                  )),
+                  icon: Icon(Icons.send_rounded,
+                      color: Theme.of(context).colorScheme.onPrimary)),
             ],
           )
         ],

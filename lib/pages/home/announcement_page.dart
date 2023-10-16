@@ -20,7 +20,9 @@ class _AnnouncementState extends State<Announcement> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: defaultBG, body: announcePage());
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: announcePage());
   }
 
   Widget announcePage() {
@@ -34,7 +36,7 @@ class _AnnouncementState extends State<Announcement> {
               alignment: Alignment.topLeft,
               child: Text(
                 'Announcements',
-                style: jakarta.copyWith(fontSize: 25, color: black),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             const SizedBox(height: 20),
@@ -72,7 +74,9 @@ class _AnnouncementState extends State<Announcement> {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       height: 110,
-      decoration: cardsContainer.copyWith(color: white),
+      decoration: cardsContainer.copyWith(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+      ),
       child: InkWell(
         onTap: () {
           dialogBox(data);
@@ -85,15 +89,16 @@ class _AnnouncementState extends State<Announcement> {
               children: [
                 Text(
                   data['title'],
-                  style: jakarta.copyWith(fontSize: 14, color: black),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 14),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   data['subtitle'],
-                  style: jakartaSub.copyWith(
-                    color: black38,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -104,16 +109,17 @@ class _AnnouncementState extends State<Announcement> {
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  border: Border.all(color: black, width: 1),
+                  border: Border.all(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                      width: 1),
                   borderRadius: BorderRadius.circular(7),
                 ),
                 child: Text(
                   data['tags'],
-                  style: jakarta.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: black,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
                 ),
               ),
             ),
@@ -129,16 +135,17 @@ class _AnnouncementState extends State<Announcement> {
         builder: ((context) {
           final hasLink = data['url'] != null && data['url'].isNotEmpty;
           return AlertDialog(
-            backgroundColor: defaultBG,
+            backgroundColor: Theme.of(context).colorScheme.background,
             title: Text(
               data['title'],
-              style: jakarta.copyWith(fontSize: 18, color: black),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: 18),
             ),
             content: SizedBox(
-              child: Text(
-                data['subtitle'],
-                style: jakartaSub.copyWith(color: black38),
-              ),
+              child: Text(data['subtitle'],
+                  style: Theme.of(context).textTheme.bodySmall),
             ),
             actions: [
               TextButton(
@@ -147,7 +154,10 @@ class _AnnouncementState extends State<Announcement> {
                 },
                 child: Text(
                   'Close',
-                  style: jakarta.copyWith(fontSize: 12, color: black),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 12),
                 ),
               ),
               if (hasLink)
@@ -157,7 +167,10 @@ class _AnnouncementState extends State<Announcement> {
                   },
                   child: Text(
                     data['buttonText'],
-                    style: jakarta.copyWith(fontSize: 12, color: black),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontSize: 12),
                   ),
                 ),
             ],

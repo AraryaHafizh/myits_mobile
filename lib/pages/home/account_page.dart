@@ -23,10 +23,10 @@ class _AccountPageState extends State<AccountPage> {
     super.initState();
     final languageSelector =
         Provider.of<LanguageSelector>(context, listen: false);
-    // final themeSelector = Provider.of<ThemeSelector>(context, listen: false);
+    final themeSelector = Provider.of<ThemeSelector>(context, listen: false);
     final notificationSelector =
         Provider.of<NotificationSelector>(context, listen: false);
-    // themeSelector.initTheme();
+    themeSelector.initTheme();
     languageSelector.initLanguage();
     notificationSelector.initNotifier();
   }
@@ -34,7 +34,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: defaultBG,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: accPage(),
     );
   }
@@ -48,13 +48,15 @@ class _AccountPageState extends State<AccountPage> {
       margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       child: Column(
         children: [
+          // account info and edit button
           Center(
             child: Column(
               children: [
                 Container(
                   height: 135,
                   decoration: BoxDecoration(
-                      color: itsBlueShade,
+                      color:
+                          Theme.of(context).navigationBarTheme.indicatorColor,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(18))),
                   child: Row(
@@ -76,14 +78,15 @@ class _AccountPageState extends State<AccountPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(username,
-                              style:
-                                  jakarta.copyWith(color: black, fontSize: 25)),
-                          const SizedBox(height: 3),
+                              style: Theme.of(context).textTheme.titleLarge),
+                          const SizedBox(height: 5),
                           Text(jurusan,
-                              style: jakarta.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w200,
-                                  color: black)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200)),
                         ],
                       )
                     ],
@@ -114,6 +117,7 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           const SizedBox(height: 55),
+          // app options
           SizedBox(
             width: MediaQuery.of(context).size.width - 85,
             child: Wrap(runSpacing: 2, children: [
@@ -124,7 +128,7 @@ class _AccountPageState extends State<AccountPage> {
             ]),
           ),
           const Spacer(),
-          credit(true),
+          credit(true, context),
         ],
       ),
     );
@@ -133,35 +137,33 @@ class _AccountPageState extends State<AccountPage> {
   // -------------- dark mode  --------------
 
   Widget darkMode() {
-    // final themeSelector = Provider.of<ThemeSelector>(context);
+    final themeSelector = Provider.of<ThemeSelector>(context);
     return ListTile(
       leading: Ink(
         height: 35,
         width: 35,
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(85, 4, 53, 145),
+        decoration: BoxDecoration(
+          color: Theme.of(context).navigationBarTheme.indicatorColor,
           shape: BoxShape.circle,
         ),
         child: Icon(
           Icons.dark_mode,
-          color: itsBlue,
+          color: Theme.of(context).colorScheme.primary,
           size: 24,
         ),
       ),
       title: Text(
         'Dark Mode',
-        style: jakarta.copyWith(fontWeight: FontWeight.w600, color: black),
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14),
       ),
       trailing: Switch(
-        // value: themeSelector.isDarkMode,
-        value: isDarkMode,
-        activeColor: itsBlue,
+        value: themeSelector.isDarkMode,
+        activeColor: Theme.of(context).colorScheme.primary,
+        inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
         onChanged: (bool value) {
           setState(() {
-            isDarkMode = value;
-            // themeSelector.setThemePref(value);
-            // themeSelector.themeChanger(value);
-            // Simpan preferensi tema ke SharedPreferences di sini.
+            themeSelector.isDarkMode = value;
+            themeSelector.setThemePref(value);
           });
         },
         thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
@@ -187,20 +189,22 @@ class _AccountPageState extends State<AccountPage> {
         leading: Ink(
           height: 35,
           width: 35,
-          decoration: const BoxDecoration(
-              color: Color.fromARGB(85, 4, 53, 145), shape: BoxShape.circle),
+          decoration: BoxDecoration(
+              color: Theme.of(context).navigationBarTheme.indicatorColor,
+              shape: BoxShape.circle),
           child: Icon(
             Icons.translate,
-            color: itsBlue,
+            color: Theme.of(context).colorScheme.primary,
             size: 20,
           ),
         ),
         title: Text('Language Mode',
-            style: jakarta.copyWith(
-                fontSize: 14, fontWeight: FontWeight.w600, color: black)),
+            style:
+                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14)),
         trailing: Switch(
           value: languageSelector.isEnglish,
-          activeColor: itsBlue,
+          activeColor: Theme.of(context).colorScheme.primary,
+          inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
           onChanged: (bool value) {
             setState(() {
               languageSelector.isEnglish = value;
@@ -220,20 +224,22 @@ class _AccountPageState extends State<AccountPage> {
         leading: Ink(
           height: 35,
           width: 35,
-          decoration: const BoxDecoration(
-              color: Color.fromARGB(85, 4, 53, 145), shape: BoxShape.circle),
+          decoration: BoxDecoration(
+              color: Theme.of(context).navigationBarTheme.indicatorColor,
+              shape: BoxShape.circle),
           child: Icon(
             Icons.notifications_rounded,
-            color: itsBlue,
+            color: Theme.of(context).colorScheme.primary,
             size: 20,
           ),
         ),
         title: Text('Notifications',
-            style: jakarta.copyWith(
-                fontSize: 14, fontWeight: FontWeight.w600, color: black)),
+            style:
+                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14)),
         trailing: Switch(
           value: notificationSelector.isNotified,
-          activeColor: itsBlue,
+          activeColor: Theme.of(context).colorScheme.primary,
+          inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
           onChanged: (bool value) {
             setState(() {
               notificationSelector.isNotified = value;

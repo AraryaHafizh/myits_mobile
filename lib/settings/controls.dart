@@ -70,7 +70,7 @@ launchURL(data) async {
   }
 }
 
-Widget appListMaker(int idx) {
+Widget appListMaker(int idx, context) {
   if (dataApplication.containsKey(idx.toString())) {
     var getValue = dataApplication[idx.toString()];
     return Material(
@@ -84,7 +84,7 @@ Widget appListMaker(int idx) {
         },
         child: Ink(
           decoration: BoxDecoration(
-            color: containerWhite,
+            color: Theme.of(context).colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -97,11 +97,10 @@ Widget appListMaker(int idx) {
               ),
               Text(
                 getValue['nama'],
-                style: jakarta.copyWith(
-                  color: black38,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 10),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -146,13 +145,14 @@ msgButton(context) {
   );
 }
 
-// -------------- banner handler  --------------
+// -------------- name banner handler  --------------
 
-Widget nameCard(nrp) {
+Widget nameCard(nrp, context) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-    decoration:
-        BoxDecoration(color: white, borderRadius: BorderRadius.circular(12)),
+    decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.circular(12)),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -162,10 +162,14 @@ Widget nameCard(nrp) {
             children: [
               Text(
                 'Welcome,',
-                style: jakarta.copyWith(fontSize: 20, color: black),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 20),
               ),
+              const SizedBox(height: 5),
               Text(getStudData('nama', nrp),
-                  style: jakarta.copyWith(fontSize: 25, color: black))
+                  style: Theme.of(context).textTheme.titleLarge)
             ]),
         Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -173,16 +177,20 @@ Widget nameCard(nrp) {
             children: [
               Text(
                 getStudData('jurusan', nrp),
-                style: jakarta.copyWith(
-                    fontSize: 14, fontWeight: FontWeight.w300, color: black),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
               ),
               const SizedBox(
-                height: 5,
+                height: 1,
               ),
               Text(
                 'Semester ${getStudData('semester', nrp)}',
-                style: jakarta.copyWith(
-                    fontSize: 14, fontWeight: FontWeight.w300, color: black),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
               )
             ])
       ],
@@ -209,7 +217,7 @@ Widget loadBanners(data) {
 
 // -------------- credit --------------
 
-Widget credit(bool isLight) {
+Widget credit(bool isLight, context) {
   return Center(
     child: Column(
       children: [
@@ -217,21 +225,21 @@ Widget credit(bool isLight) {
           'assets/images/myits_w.png',
           width: 35,
           height: 35,
-          color: isLight ? itsLogo : Colors.white,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         Text(
           '© 2023 Institut Teknologi Sepuluh Nopember',
-          style: jakarta.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w100,
-              fontSize: 8,
-              color: isLight ? black : Colors.white),
+              fontSize: 8
+          ),
         ),
         Text(
           'V 0.39',
-          style: jakarta.copyWith(
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.w100,
-              fontSize: 8,
-              color: isLight ? black : Colors.white),
+              fontSize: 8
+          ),
         ),
       ],
     ),

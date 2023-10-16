@@ -15,12 +15,10 @@ void main() async {
   final isEng = prefs.getBool('isEnglish') ?? true;
   final isNotified = prefs.getBool('isNotified') ?? true;
 
-  // ThemeSelector().themeChanger(isDarkMode);
-
   runApp(
     MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => ThemeSelector()),
+        ChangeNotifierProvider(create: (_) => ThemeSelector()),
         ChangeNotifierProvider(create: (_) => LanguageSelector()),
         ChangeNotifierProvider(create: (_) => NotificationSelector()),
       ],
@@ -31,13 +29,6 @@ void main() async {
           isNotified: isNotified),
     ),
   );
-  // runApp(
-  //   MyApp(
-  //       isLogin: isLogin,
-  //       isDarkMode: isDarkMode,
-  //       isEng: isEng,
-  //       isNotified: isNotified),
-  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -59,12 +50,7 @@ class MyApp extends StatelessWidget {
       title: 'myITS Pocket',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
-      // ThemeData(
-      //   useMaterial3: true,
-      //   colorSchemeSeed: Colors.blue,
-      //   brightness: isDarkMode ? Brightness.dark : Brightness.light,
-      // ),
+      themeMode: ThemeMode.dark,
       initialRoute: isLogin ? '/homepage' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),

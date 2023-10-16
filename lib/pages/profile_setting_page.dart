@@ -29,7 +29,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBarHandler(),
-        backgroundColor: defaultBG,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -42,7 +42,7 @@ class _EditProfileState extends State<EditProfile> {
   appBarHandler() {
     return AppBar(
       scrolledUnderElevation: 0,
-      backgroundColor: defaultBG,
+      backgroundColor: Theme.of(context).colorScheme.background,
       toolbarHeight: 85,
       leading: IconButton(
           onPressed: () {
@@ -50,12 +50,9 @@ class _EditProfileState extends State<EditProfile> {
           },
           icon: Icon(
             Icons.arrow_back_ios_rounded,
-            color: black,
+            color: Theme.of(context).colorScheme.onSecondary,
           )),
-      title: Text(
-        'My Profile',
-        style: jakarta.copyWith(fontSize: 25, color: black),
-      ),
+      title: Text('My Profile', style: Theme.of(context).textTheme.titleLarge),
     );
   }
 
@@ -64,6 +61,7 @@ class _EditProfileState extends State<EditProfile> {
       margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
       child: Column(
         children: [
+          // Profile avatar
           Center(
             child: CircleAvatar(
               backgroundColor: itsBlue,
@@ -106,9 +104,11 @@ class _EditProfileState extends State<EditProfile> {
       enabled: isEnable,
       decoration: profileSetting.copyWith(
         labelText: label,
-        labelStyle: jakarta.copyWith(fontSize: 16, color: black38),
+        labelStyle:
+            Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16),
         hintText: hintText,
-        hintStyle: jakarta.copyWith(fontSize: 14, color: black38),
+        hintStyle:
+            Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
       ),
     );
   }
@@ -127,7 +127,8 @@ class _EditProfileState extends State<EditProfile> {
               BorderRadius.circular(15), // Atur radius sesuai kebutuhan
         ),
       ),
-      child: Text('Save', style: jakarta.copyWith(fontSize: 14, color: Colors.white)),
+      child: Text('Save',
+          style: jakarta.copyWith(fontSize: 14, color: Colors.white)),
     );
   }
 }

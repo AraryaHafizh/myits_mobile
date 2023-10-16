@@ -44,7 +44,7 @@ class _LoginPageState extends State<ResetPassPage> {
             options(),
             searchButton(),
             const SizedBox(height: 55),
-            credit(false)
+            credit(false, context)
           ],
         ),
       ),
@@ -117,8 +117,7 @@ class _LoginPageState extends State<ResetPassPage> {
         context: context,
         builder: ((context) => AlertDialog(
               title: Text('Login Gagal',
-                  style: jakarta.copyWith(
-                      color: black, fontSize: 20)),
+                  style: jakarta.copyWith(color: black, fontSize: 20)),
               content: SizedBox(
                 width: 220,
                 height: 37,

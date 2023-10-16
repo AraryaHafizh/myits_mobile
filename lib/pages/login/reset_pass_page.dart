@@ -26,26 +26,31 @@ class _LoginPageState extends State<ResetPassPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: itsBlueStatic,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 45),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/its.png',
-              width: 160,
-              height: 160,
+      body: Center(
+        child: SizedBox(
+          width: 510,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 45),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/its.png',
+                  width: 160,
+                  height: 160,
+                ),
+                const SizedBox(height: 12),
+                Text('Enter your myITS ID to find your account.',
+                    style: jakarta.copyWith(fontSize: 14, color: whiteStatic)),
+                const SizedBox(height: 32),
+                nrpField(),
+                options(),
+                searchButton(),
+                const SizedBox(height: 55),
+                credit(false, context)
+              ],
             ),
-            const SizedBox(height: 12),
-            Text('Enter your myITS ID to find your account.',
-                style: jakarta.copyWith(fontSize: 14, color: whiteStatic)),
-            const SizedBox(height: 32),
-            nrpField(),
-            options(),
-            searchButton(),
-            const SizedBox(height: 55),
-            credit(false)
-          ],
+          ),
         ),
       ),
     );
@@ -122,14 +127,14 @@ class _LoginPageState extends State<ResetPassPage> {
                 width: 220,
                 height: 37,
                 child: Text('Silahkan cek kembali NRP dan Password anda.',
-                    style: jakarta.copyWith(fontSize:14, color: black)),
+                    style: jakarta.copyWith(fontSize: 14, color: black)),
               ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     'OK',
-                    style: jakarta.copyWith(fontSize:14, color: itsBlue),
+                    style: jakarta.copyWith(fontSize: 14, color: itsBlue),
                   ),
                 )
               ],

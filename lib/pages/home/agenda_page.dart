@@ -20,7 +20,9 @@ class _AccountPageState extends State<AgendaPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: defaultBG, body: agendaPage());
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: agendaPage());
   }
 
   Widget agendaPage() {
@@ -34,7 +36,7 @@ class _AccountPageState extends State<AgendaPage> {
               alignment: Alignment.topLeft,
               child: Text(
                 'Agenda',
-                style: jakarta.copyWith(fontSize: 25, color: black),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             const SizedBox(height: 20),
@@ -77,7 +79,9 @@ class _AccountPageState extends State<AgendaPage> {
   agendaList(data) {
     return Container(
       padding: const EdgeInsets.all(5),
-      decoration: cardsContainer.copyWith(color: white),
+      decoration: cardsContainer.copyWith(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+      ),
       child: InkWell(
         onTap: () {
           print('${data['title']} ditekan!');
@@ -100,16 +104,22 @@ class _AccountPageState extends State<AgendaPage> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
                     decoration: BoxDecoration(
-                        color: itsBlueShadeStatic,
+                        color:
+                            Theme.of(context).navigationBarTheme.indicatorColor,
                         borderRadius: BorderRadius.circular(6)),
                     child: Text(
                       data['date'],
-                      style:
-                          jakarta.copyWith(fontSize: 9, color: itsBlueStatic),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 9),
                     )),
                 const SizedBox(height: 2),
                 Text(data['title'],
-                    style: jakarta.copyWith(fontSize: 14, color: black),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontSize: 14),
                     overflow: TextOverflow.ellipsis),
               ],
             ),
@@ -121,16 +131,17 @@ class _AccountPageState extends State<AgendaPage> {
                 child: Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    border: Border.all(color: black, width: 1),
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        width: 1),
                     borderRadius: BorderRadius.circular(7),
                   ),
                   child: Text(
                     data['tags'],
-                    style: jakarta.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.normal,
-                      color: black,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontSize: 10, fontWeight: FontWeight.normal),
                   ),
                 ),
               ),
@@ -147,12 +158,13 @@ class _AccountPageState extends State<AgendaPage> {
         context: context,
         builder: ((context) {
           return AlertDialog(
-            backgroundColor: defaultBG,
+            backgroundColor: Theme.of(context).colorScheme.background,
             content: Container(
               padding: const EdgeInsets.symmetric(vertical: 5),
               height: MediaQuery.of(context).size.height * 0.6,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
@@ -161,11 +173,18 @@ class _AccountPageState extends State<AgendaPage> {
                     const SizedBox(height: 10),
                     Text(
                       data['title'],
-                      style: jakarta.copyWith(fontSize: 18, color: black),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(fontSize: 18),
                     ),
+                    const SizedBox(height: 6),
                     Text(
                       data['desc'],
-                      style: jakartaSub.copyWith(color: black38),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(fontSize: 12, fontWeight: FontWeight.w200),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -176,7 +195,10 @@ class _AccountPageState extends State<AgendaPage> {
                           },
                           child: Text(
                             'Close',
-                            style: jakarta.copyWith(fontSize: 12, color: black),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(fontSize: 12),
                           ),
                         ),
                         TextButton(
@@ -185,7 +207,10 @@ class _AccountPageState extends State<AgendaPage> {
                           },
                           child: Text(
                             'More Information',
-                            style: jakarta.copyWith(fontSize: 12, color: black),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(fontSize: 12),
                           ),
                         ),
                       ],

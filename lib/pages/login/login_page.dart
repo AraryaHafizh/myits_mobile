@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myits_portal/settings/controls.dart';
-import 'package:myits_portal/data/data_mhs.dart';
 import 'package:myits_portal/pages/login/reset_pass_page.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +16,20 @@ class _LoginPageState extends State<LoginPage> {
   bool _passwordVisible = true;
   final TextEditingController _nrpInput = TextEditingController();
   final TextEditingController _passwordInput = TextEditingController();
+  late Future<void> loadMhs;
+
+  @override
+  void initState() {
+    super.initState();
+    loadMhs = loadDataMhs();
+  }
 
   Future<void> _login() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('islogin', true);
     await prefs.setInt('nrp', int.parse(_nrpInput.text));
-
+    // int? nrp = await prefs.getInt('nrp');
+    // print(nrp);
     Navigator.pushReplacementNamed(context, '/homepage');
   }
 
@@ -38,34 +45,44 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: itsBlueStatic,
       body: Center(
-        child: SizedBox(
-          width: 510,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 45),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/its.png',
-                  width: 160,
-                  height: 160,
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                nrpField(),
-                const SizedBox(
-                  height: 15,
-                ),
-                passwordField(),
-                options(),
-                loginButton(),
-                const SizedBox(height: 55),
-                credit(false, context)
-              ],
-            ),
-          ),
-        ),
+        child: FutureBuilder(
+            future: Future.wait([loadMhs]),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error ${snapshot.error}'));
+              } else {
+                return SizedBox(
+                  width: 510,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 45),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/its.png',
+                          width: 160,
+                          height: 160,
+                        ),
+                        const SizedBox(
+                          height: 22,
+                        ),
+                        nrpField(),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        passwordField(),
+                        options(),
+                        loginButton(),
+                        const SizedBox(height: 55),
+                        credit(false, context)
+                      ],
+                    ),
+                  ),
+                );
+              }
+            }),
       ),
     );
   }
@@ -75,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget nrpField() {
     return TextField(
       controller: _nrpInput,
+      cursorColor: itsYellowStatic,
       style: jakarta.copyWith(fontSize: 14, color: whiteStatic),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
@@ -90,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget passwordField() {
     return TextFormField(
+      cursorColor: itsYellowStatic,
       controller: _passwordInput,
       obscureText: _passwordVisible,
       style: jakarta.copyWith(fontSize: 14, color: whiteStatic),
@@ -118,8 +137,7 @@ class _LoginPageState extends State<LoginPage> {
         // debugPrint('test');
       },
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-            const Color.fromARGB(255, 255, 221, 27)),
+        backgroundColor: MaterialStateProperty.all<Color>(itsYellowStatic),
         padding: MaterialStateProperty.all<EdgeInsets>(
             const EdgeInsets.symmetric(horizontal: 22, vertical: 12)),
       ),
@@ -137,17 +155,20 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordInput.text;
     bool isLoggedIn = false;
     dataMhs.forEach((key, value) {
-      if (key == nrp && value['password'] == password) {
+      if (key == nrp.toString() && value['password'] == password.toString()) {
+        print('true');
+        print(key);
+        print(value);
         isLoggedIn = true;
       }
     });
     if (isLoggedIn) {
       _login();
-      debugPrint('login berhasil');
+      print('login berhasil');
       return;
     } else {
       errorDialog();
-      debugPrint('login tidak berhasil');
+      print('login tidak berhasil');
     }
   }
 

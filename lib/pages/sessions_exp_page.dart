@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myits_portal/settings/controls.dart';
-import 'package:myits_portal/data/data_mhs.dart';
 import 'package:myits_portal/settings/style.dart';
 
 class ResetPassPage extends StatefulWidget {

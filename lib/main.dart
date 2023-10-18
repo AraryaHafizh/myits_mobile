@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/pages/home/home_page.dart';
 import 'package:myits_portal/pages/login/login_page.dart';
+import 'package:myits_portal/settings/fav_app_controls.dart';
 import 'package:myits_portal/settings/language_controls.dart';
 import 'package:myits_portal/settings/notification_controls.dart';
 import 'package:myits_portal/settings/theme_controls.dart';
@@ -12,7 +13,7 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final isLogin = prefs.getBool('islogin') ?? false;
   final isDarkMode = prefs.getBool('isDarkMode') ?? false;
-  final isEng = prefs.getBool('isEnglish') ?? true;
+  // final isEng = prefs.getBool('isEnglish') ?? true;
   final isNotified = prefs.getBool('isNotified') ?? true;
 
   runApp(
@@ -21,11 +22,12 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeSelector()),
         ChangeNotifierProvider(create: (_) => LanguageSelector()),
         ChangeNotifierProvider(create: (_) => NotificationSelector()),
+        ChangeNotifierProvider(create: (_) => TappedState()),
       ],
       child: MyApp(
           isLogin: isLogin,
           isDarkMode: isDarkMode,
-          isEng: isEng,
+          // isEng: isEng,
           isNotified: isNotified),
     ),
   );
@@ -34,23 +36,26 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool isLogin;
   final bool isDarkMode;
-  final bool isEng;
+  // final bool isEng;
   final bool isNotified;
+
   const MyApp(
       {Key? key,
       required this.isLogin,
       required this.isDarkMode,
-      required this.isEng,
+      // required this.isEng,
       required this.isNotified})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final themeSelector = Provider.of<ThemeSelector>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'myITS Pocket',
+      title: 'myITS Mobile',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: themeSelector.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      // themeMode: ThemeMode.dark,
       initialRoute: isLogin ? '/homepage' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),

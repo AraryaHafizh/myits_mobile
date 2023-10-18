@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
-import 'package:myits_portal/data/favorite_app.dart';
+import 'package:myits_portal/settings/fav_app_controls.dart';
 import 'package:myits_portal/pages/home/account_page.dart';
 import 'package:myits_portal/pages/home/agenda_page.dart';
 import 'package:myits_portal/pages/home/announcement_page.dart';
@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   late Future<void> loadClass;
   late Future<void> loadApp;
   late Future<void> loadBanner;
+  late Future<void> loadMhs;
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
     loadClass = loadDataClass();
     loadApp = loadDataApp();
     loadBanner = loadDataBanner();
+    loadMhs = loadDataMhs();
   }
 
   @override
@@ -68,7 +70,8 @@ class _HomePageState extends State<HomePage> {
                           );
                         } else {
                           final nrp = nrpSnapshot.data!;
-      
+
+                          // return Text(nrp.toString());
                           return <Widget>[
                             homePage(nrp),
                             const AgendaPage(),
@@ -90,10 +93,10 @@ class _HomePageState extends State<HomePage> {
                               Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
                                 builder: (context) =>
-                                    LoginPage(), // Arahkan ke LoginPage
+                                    const LoginPage(), // Arahkan ke LoginPage
                               ));
                             },
-                            child: Text('Login'))
+                            child: const Text('Login'))
                       ],
                     ),
                   );
@@ -134,10 +137,11 @@ class _HomePageState extends State<HomePage> {
   // -------------- home screen  --------------
 
   Widget homePage(int nrp) {
+    // final isFav = Provider.of<TappedState>(context);
     return Container(
         margin: const EdgeInsets.only(top: 25),
         child: FutureBuilder(
-            future: Future.wait([loadClass, loadApp, loadBanner]),
+            future: Future.wait([loadClass, loadApp, loadBanner, loadMhs]),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -232,7 +236,12 @@ class _HomePageState extends State<HomePage> {
                                     InkWell(
                                         onTap: () {
                                           debugPrint('tomnol ditekan');
-                                          botSheetEdit();
+                                          botSheetEdit(nrp, context)
+                                              .then((value) {
+                                            userNRP = nrp;
+                                          });
+                                          // print(getStudData('favApp', nrp)
+                                          //     .toString());
                                         },
                                         child: Text('Edit >',
                                             style: Theme.of(context)
@@ -264,14 +273,14 @@ class _HomePageState extends State<HomePage> {
                                         mainAxisSpacing: 5.0,
                                       ),
                                       scrollDirection: Axis.horizontal,
-                                      itemCount: favApp.length + 1,
+                                      itemCount: getFavData(nrp).length + 1,
                                       itemBuilder:
                                           (BuildContext context, index) {
-                                        if (index == favApp.length) {
+                                        if (index == getFavData(nrp).length) {
                                           return openAll();
                                         } else {
                                           return appListMaker(
-                                              favApp[index], context);
+                                              getFavData(nrp)[index], context);
                                         }
                                       },
                                     ),
@@ -347,39 +356,6 @@ class _HomePageState extends State<HomePage> {
                 children: getTags(context).map((tag) {
                   return appByTag(tag);
                 }).toList(),
-              ),
-            ),
-          );
-        }));
-  }
-
-  // menampilkan bottomsheet
-  Future botSheetEdit() {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double desiredHeight = 0.83 * screenHeight;
-    return showModalBottomSheet(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        context: context,
-        isScrollControlled: true,
-        showDragHandle: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-        ),
-        builder: ((context) {
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            width: MediaQuery.of(context).size.width - 25,
-            height: desiredHeight,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Text('Choose 5 applications to be favorite.'),
-                  Column(
-                    children: getTags(context).map((tag) {
-                      return appByTag(tag);
-                    }).toList(),
-                  ),
-                ],
               ),
             ),
           );

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 Color itsBlueStatic = const Color.fromARGB(255, 4, 53, 145);
 Color itsBlueShadeStatic = const Color.fromARGB(55, 161, 194, 255);
 Color whiteStatic = Colors.white;
+Color itsYellowStatic = const Color.fromARGB(255, 255, 221, 27);
 
 // Responsive Colors
 Color defaultBG = const Color.fromARGB(255, 237, 242, 247);
@@ -98,4 +99,3 @@ TextStyle jakarta = const TextStyle(
   fontFamily: 'Jakarta',
   fontWeight: FontWeight.w600,
 );
-

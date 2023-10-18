@@ -64,8 +64,10 @@ class OpenChat extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Ask a question...',
-                    hintStyle:
-                        jakarta.copyWith(fontSize: 14, color: containerBG),
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(fontSize: 14),
                     border: InputBorder.none,
                   ),
                 ),

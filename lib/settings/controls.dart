@@ -1,4 +1,3 @@
-import 'package:myits_portal/data/data_mhs.dart';
 import 'package:myits_portal/pages/chat_dptsi_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +7,12 @@ import 'package:flutter/services.dart';
 
 // -------------- load json data  --------------
 
-var dataStud = dataMhs;
+// var dataStud = dataMhs;
 Map<String, dynamic> dataAnnounce = {};
 Map<String, dynamic> dataClass = {};
 Map<String, dynamic> dataApplication = {};
 Map<String, dynamic> dataAgenda = {};
+Map<String, dynamic> dataMhs = {};
 List<String> dataBanner = [];
 
 Future<void> loadDataAnnounce() async {
@@ -43,6 +43,13 @@ Future<void> loadDataAgenda() async {
   dataAgenda = json.decode(jsonData);
 }
 
+Future<void> loadDataMhs() async {
+  // await Future.delayed(const Duration(seconds: 1)); //simulate loading
+  final String jsonData =
+      await rootBundle.loadString('assets/data/data_mhs.json');
+  dataMhs = json.decode(jsonData);
+}
+
 Future<void> loadDataBanner() async {
   final String jsonData =
       await rootBundle.loadString('assets/data/data_banner.json');
@@ -53,13 +60,17 @@ Future<void> loadDataBanner() async {
 
 // -------------- Widget Mkaer --------------
 
-String getStudData(request, nrp) {
-  String reqData = '';
-  dataStud.forEach((key, value) {
-    if (key == nrp) {
-      reqData = value[request].toString();
+dynamic getStudData(request, nrp) {
+  dynamic reqData;
+  dataMhs.forEach((key, value) {
+    // print(key);
+    if (key == nrp.toString()) {
+      // print(key);
+      // print(value[request]);
+      reqData = value[request];
     }
   });
+  // print(reqData);
   return reqData;
 }
 
@@ -100,7 +111,7 @@ Widget appListMaker(int idx, context) {
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
-                    .copyWith(fontWeight: FontWeight.w500, fontSize: 10),
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 11),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -149,53 +160,55 @@ msgButton(context) {
 
 Widget nameCard(nrp, context) {
   return Container(
-    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-    decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        borderRadius: BorderRadius.circular(12)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Welcome,',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 20),
-              ),
-              const SizedBox(height: 5),
-              Text(getStudData('nama', nrp),
-                  style: Theme.of(context).textTheme.titleLarge)
-            ]),
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                getStudData('jurusan', nrp),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
-              ),
-              const SizedBox(
-                height: 1,
-              ),
-              Text(
-                'Semester ${getStudData('semester', nrp)}',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
-              )
-            ])
-      ],
-    ),
-  );
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(12)),
+      child: 
+      // Text(getStudData('jurusan', nrp).toString())
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Welcome,',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 20),
+                ),
+                const SizedBox(height: 5),
+                Text(getStudData('nama', nrp),
+                    style: Theme.of(context).textTheme.titleLarge)
+              ]),
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  getStudData('jurusan', nrp),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
+                ),
+                const SizedBox(
+                  height: 1,
+                ),
+                Text(
+                  'Semester ${getStudData('semester', nrp)}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
+                )
+              ])
+        ],
+      ),
+      );
 }
 
 Widget loadBanners(data) {
@@ -225,21 +238,32 @@ Widget credit(bool isLight, context) {
           'assets/images/myits_w.png',
           width: 35,
           height: 35,
-          color: Theme.of(context).colorScheme.tertiary,
+          color:
+              isLight ? Theme.of(context).colorScheme.tertiary : Colors.white,
         ),
         Text(
           '© 2023 Institut Teknologi Sepuluh Nopember',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.w100,
-              fontSize: 8
-          ),
+          style: isLight
+              ? Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontWeight: FontWeight.w100, fontSize: 8)
+              : jakarta.copyWith(
+                  fontWeight: FontWeight.w100,
+                  fontSize: 8,
+                  color: Colors.white),
         ),
         Text(
           'V 0.39',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.w100,
-              fontSize: 8
-          ),
+          style: isLight
+              ? Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontWeight: FontWeight.w100, fontSize: 8)
+              : jakarta.copyWith(
+                  fontWeight: FontWeight.w100,
+                  fontSize: 8,
+                  color: Colors.white),
         ),
       ],
     ),

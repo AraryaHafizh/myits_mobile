@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
-import 'package:myits_portal/pages/profile_setting_page.dart';
+import 'package:myits_portal/pages/edit_profile_page.dart';
 import 'package:myits_portal/settings/language_controls.dart';
 import 'package:myits_portal/settings/notification_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:myits_portal/settings/theme_controls.dart';
+// import 'package:myits_portal/settings/theme_controls.dart';
 
 class AccountPage extends StatefulWidget {
   final int nrp;
@@ -23,10 +23,10 @@ class _AccountPageState extends State<AccountPage> {
     super.initState();
     final languageSelector =
         Provider.of<LanguageSelector>(context, listen: false);
-    final themeSelector = Provider.of<ThemeSelector>(context, listen: false);
+    // final themeSelector = Provider.of<ThemeSelector>(context, listen: false);
     final notificationSelector =
         Provider.of<NotificationSelector>(context, listen: false);
-    themeSelector.initTheme();
+    // themeSelector.initTheme();
     languageSelector.initLanguage();
     notificationSelector.initNotifier();
   }
@@ -35,13 +35,13 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: accPage(),
+      body: bodyPage(),
     );
   }
 
   // -------------- account page handler  --------------
 
-  Widget accPage() {
+  Widget bodyPage() {
     String username = getStudData('nama', widget.nrp);
     String jurusan = getStudData('jurusan', widget.nrp);
     return Container(
@@ -121,7 +121,7 @@ class _AccountPageState extends State<AccountPage> {
           SizedBox(
             width: MediaQuery.of(context).size.width - 85,
             child: Wrap(runSpacing: 2, children: [
-              darkMode(),
+              // darkMode(),
               languageMode(),
               notification(),
               logOut(),
@@ -136,50 +136,50 @@ class _AccountPageState extends State<AccountPage> {
 
   // -------------- dark mode  --------------
 
-  Widget darkMode() {
-    final themeSelector = Provider.of<ThemeSelector>(context);
-    return ListTile(
-      leading: Ink(
-        height: 35,
-        width: 35,
-        decoration: BoxDecoration(
-          color: Theme.of(context).navigationBarTheme.indicatorColor,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          Icons.dark_mode,
-          color: Theme.of(context).colorScheme.primary,
-          size: 24,
-        ),
-      ),
-      title: Text(
-        'Dark Mode',
-        style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14),
-      ),
-      trailing: Switch(
-        value: themeSelector.isDarkMode,
-        activeColor: Theme.of(context).colorScheme.primary,
-        inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
-        onChanged: (bool value) {
-          setState(() {
-            themeSelector.isDarkMode = value;
-            themeSelector.setThemePref(value);
-          });
-        },
-        thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
-              return const Icon(
-                Icons.dark_mode,
-                color: Colors.white,
-              );
-            }
-            return const Icon(Icons.sunny, color: Colors.white);
-          },
-        ),
-      ),
-    );
-  }
+  // Widget darkMode() {
+  //   final themeSelector = Provider.of<ThemeSelector>(context);
+  //   return ListTile(
+  //     leading: Ink(
+  //       height: 35,
+  //       width: 35,
+  //       decoration: BoxDecoration(
+  //         color: Theme.of(context).navigationBarTheme.indicatorColor,
+  //         shape: BoxShape.circle,
+  //       ),
+  //       child: Icon(
+  //         Icons.dark_mode,
+  //         color: Theme.of(context).colorScheme.primary,
+  //         size: 24,
+  //       ),
+  //     ),
+  //     title: Text(
+  //       'Dark Mode',
+  //       style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14),
+  //     ),
+  //     trailing: Switch(
+  //       value: themeSelector.isDarkMode,
+  //       activeColor: Theme.of(context).colorScheme.primary,
+  //       inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
+  //       onChanged: (bool value) {
+  //         setState(() {
+  //           themeSelector.isDarkMode = value;
+  //           themeSelector.setThemePref(value);
+  //         });
+  //       },
+  //       thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+  //         (Set<MaterialState> states) {
+  //           if (states.contains(MaterialState.selected)) {
+  //             return const Icon(
+  //               Icons.dark_mode,
+  //               color: Colors.white,
+  //             );
+  //           }
+  //           return const Icon(Icons.sunny, color: Colors.white);
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
   // -------------- language mode  --------------
 

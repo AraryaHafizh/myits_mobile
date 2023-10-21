@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/pages/home/home_page.dart';
 import 'package:myits_portal/pages/login/login_page.dart';
-import 'package:myits_portal/settings/fav_app_controls.dart';
+import 'package:myits_portal/settings/home_page_settings/fav_app_controls.dart';
 import 'package:myits_portal/settings/language_controls.dart';
 import 'package:myits_portal/settings/notification_controls.dart';
 import 'package:myits_portal/settings/theme_controls.dart';
@@ -19,7 +19,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeSelector()),
+        // ChangeNotifierProvider(create: (_) => ThemeSelector()),
         ChangeNotifierProvider(create: (_) => LanguageSelector()),
         ChangeNotifierProvider(create: (_) => NotificationSelector()),
         ChangeNotifierProvider(create: (_) => TappedState()),
@@ -48,13 +48,14 @@ class MyApp extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final themeSelector = Provider.of<ThemeSelector>(context);
+    // final themeSelector = Provider.of<ThemeSelector>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'myITS Mobile',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: themeSelector.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ThemeMode.system,
+      // themeMode: themeSelector.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       // themeMode: ThemeMode.dark,
       initialRoute: isLogin ? '/homepage' : '/login',
       routes: {

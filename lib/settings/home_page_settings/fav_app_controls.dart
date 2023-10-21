@@ -3,8 +3,25 @@ import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
-
 int userNRP = 0;
+
+Widget editFavApp(context, nrp) {
+  return InkWell(
+      onTap: () {
+        debugPrint('tomnol ditekan');
+        botSheetEdit(context, nrp).then((value) {
+          userNRP = nrp;
+        });
+        // print(getStudData('favApp', nrp)
+        //     .toString());
+      },
+      child: Text('Edit',
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(fontWeight: FontWeight.w900)));
+}
+
 // Future<void> loadFavApp() async {
 //   final prefs = await SharedPreferences.getInstance();
 //   await prefs.setStringList('favApp', favApp.map((e) => e.toString()).toList());
@@ -64,7 +81,7 @@ List getFavData(nrp) {
 }
 
 // menampilkan bottomsheet
-Future botSheetEdit(nrp, context) async {
+Future botSheetEdit(context, nrp) async {
   double screenHeight = MediaQuery.of(context).size.height;
   double desiredHeight = 0.83 * screenHeight;
   // final tappedState = Provider.of<TappedState>(context, listen: false);
@@ -158,6 +175,7 @@ Widget appListEdit(data, idx, context) {
         border: Border.all(width: 1),
         borderRadius: BorderRadius.circular(12)),
     child: InkWell(
+      borderRadius: BorderRadius.circular(12),
       onTap: () {
         if (maxLen) {
           tappedState.toggleTap(idx);

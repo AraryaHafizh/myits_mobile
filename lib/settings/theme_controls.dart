@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/style.dart';
 // import 'package:myits_portal/style.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
-class ThemeSelector with ChangeNotifier {
-  bool isDarkMode = false;
+// class ThemeSelector with ChangeNotifier {
+//   bool isDarkMode = false;
 
-  Future<bool> getThemePref() async {
-    final prefs = await SharedPreferences.getInstance();
-    isDarkMode = prefs.getBool('isDarkMode') ?? false;
-    return isDarkMode;
-  }
+//   Future<bool> getThemePref() async {
+//     final prefs = await SharedPreferences.getInstance();
+//     isDarkMode = prefs.getBool('isDarkMode') ?? false;
+//     return isDarkMode;
+//   }
 
-  Future<void> setThemePref(val) async {
-    final prefs = await SharedPreferences.getInstance();
-    isDarkMode = val;
-    await prefs.setBool('isDarkMode', val);
-    notifyListeners();
-  }
+//   Future<void> setThemePref(val) async {
+//     final prefs = await SharedPreferences.getInstance();
+//     isDarkMode = val;
+//     await prefs.setBool('isDarkMode', val);
+//     notifyListeners();
+//   }
 
-  Future<void> initTheme() async {
-    isDarkMode = await getThemePref();
-    await getThemePref();
-  }
-}
+//   Future<void> initTheme() async {
+//     isDarkMode = await getThemePref();
+//     await getThemePref();
+//   }
+// }
 
 ThemeData lightTheme = ThemeData(
     useMaterial3: true,

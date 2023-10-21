@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 // -------------- load json data  --------------
-
 // var dataStud = dataMhs;
 Map<String, dynamic> dataAnnounce = {};
 Map<String, dynamic> dataClass = {};
@@ -58,8 +57,7 @@ Future<void> loadDataBanner() async {
   dataBanner = List<String>.from(images);
 }
 
-// -------------- Widget Mkaer --------------
-
+// -------------- request data from student --------------
 dynamic getStudData(request, nrp) {
   dynamic reqData;
   dataMhs.forEach((key, value) {
@@ -74,6 +72,7 @@ dynamic getStudData(request, nrp) {
   return reqData;
 }
 
+// -------------- launch URL --------------
 launchURL(data) async {
   final Uri url = Uri.parse(data.toString());
   if (!await launchUrl(url)) {
@@ -81,63 +80,7 @@ launchURL(data) async {
   }
 }
 
-Widget appListMaker(int idx, context) {
-  if (dataApplication.containsKey(idx.toString())) {
-    var getValue = dataApplication[idx.toString()];
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        splashColor: const Color.fromARGB(55, 4, 53, 145),
-        borderRadius: BorderRadius.circular(12),
-        onTap: () async {
-          await launchURL(getValue['url']);
-          debugPrint('${getValue['nama']} ditekan!');
-        },
-        child: Ink(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                getValue['gambar'],
-                width: 58,
-                height: 58,
-              ),
-              Text(
-                getValue['nama'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontWeight: FontWeight.w500, fontSize: 11),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  } else {
-    // Handle case when idx is not a valid key in dataApplication
-    return const SizedBox(); // You can return an empty widget or some other placeholder.
-  }
-}
-
-List<String> getTags(BuildContext context) {
-  List<String> appTags = [];
-  for (var element in dataApplication.values) {
-    if (element.containsKey('tags')) {
-      appTags.add(element['tags']);
-    }
-  }
-  appTags = appTags.toSet().toList();
-  return appTags;
-}
-
 // -------------- message button  --------------
-
 msgButton(context) {
   return FloatingActionButton(
     backgroundColor: itsBlue,
@@ -156,80 +99,7 @@ msgButton(context) {
   );
 }
 
-// -------------- name banner handler  --------------
-
-Widget nameCard(nrp, context) {
-  return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondaryContainer,
-          borderRadius: BorderRadius.circular(12)),
-      child: 
-      // Text(getStudData('jurusan', nrp).toString())
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Welcome,',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontSize: 20),
-                ),
-                const SizedBox(height: 5),
-                Text(getStudData('nama', nrp),
-                    style: Theme.of(context).textTheme.titleLarge)
-              ]),
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  getStudData('jurusan', nrp),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
-                ),
-                const SizedBox(
-                  height: 1,
-                ),
-                Text(
-                  'Semester ${getStudData('semester', nrp)}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
-                )
-              ])
-        ],
-      ),
-      );
-}
-
-Widget loadBanners(data) {
-  return InkWell(
-    onTap: () {
-      debugPrint('Banner ditekan');
-    },
-    child: SizedBox(
-      width: double.infinity,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.network(
-            data,
-            fit: BoxFit.cover,
-          )),
-    ),
-  );
-}
-
 // -------------- credit --------------
-
 Widget credit(bool isLight, context) {
   return Center(
     child: Column(

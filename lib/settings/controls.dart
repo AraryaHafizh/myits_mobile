@@ -14,7 +14,7 @@ String bannerURL =
 String appURL =
     'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFLTa_HU65ZaKrjjvr.json';
 String mhsURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhQSvCxo2JGM46SPggg.json';
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhS9qciBm6rdP1hTAKd.json';
 String announcementURL =
     'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFSDOEdHNNEqf5hUyA.json';
 String agendaURL =

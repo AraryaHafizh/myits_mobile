@@ -2,18 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
-int userNRP = 0;
+import 'package:firebase_database/firebase_database.dart';
 
-Widget editFavApp(context, nrp) {
+int userNRP = 0;
+List favApp = getFavData(userNRP);
+// final databaseRef = FirebaseDatabase.instance.ref('$mhsURL/$userNRP');
+final databaseRef = FirebaseDatabase.instance.ref().child('data');
+
+List getFavData(nrp) {
+  List data = getStudData('favApp', nrp);
+  // print(data);
+  return data;
+}
+
+class FavAppHandler extends ChangeNotifier {
+  List copyFav = [];
+  int get favLen => copyFav.length;
+
+  bool isFav(idx) {
+    return copyFav.contains(idx);
+  }
+
+  void toggleTap(idx) {
+    if (isFav(idx)) {
+      copyFav.remove(idx);
+    } else {
+      copyFav.add(idx);
+    }
+    notifyListeners();
+  }
+
+  void eraseOne(idx) {
+    copyFav.remove(idx);
+    notifyListeners();
+  }
+}
+
+void pushNewFav(List newFav) {
+  // databaseRef.child('data/favApp').set(newFav);
+  // databaseRef
+  //     .child(userNRP.toString())
+  //     .child("data")
+  //     .update({"favApp": newFav});
+}
+
+Widget openEditFavApp(BuildContext context, nrp) {
   return InkWell(
       onTap: () {
         debugPrint('tomnol ditekan');
         botSheetEdit(context, nrp).then((value) {
           userNRP = nrp;
         });
-        // print(getStudData('favApp', nrp)
-        //     .toString());
+        print(userNRP);
+        // botSheetEdit(context, nrp);
       },
       child: Text('Edit',
           style: Theme.of(context)
@@ -22,71 +63,13 @@ Widget editFavApp(context, nrp) {
               .copyWith(fontWeight: FontWeight.w900)));
 }
 
-// Future<void> loadFavApp() async {
-//   final prefs = await SharedPreferences.getInstance();
-//   await prefs.setStringList('favApp', favApp.map((e) => e.toString()).toList());
-// }
-List favApp = getFavData(userNRP);
-// List favApp = [];
-
-class TappedState extends ChangeNotifier {
-  List favAppTemp = List<int>.from(favApp);
-  // List favAppTemp = [];
-
-  int get favLen => favAppTemp.length;
-
-  bool isFav(idx) {
-    return favAppTemp.contains(idx);
-  }
-
-  // List<int> getFav() {
-  //   return favAppTemp;
-  // }
-
-  void toggleTap(idx) {
-    if (isFav(idx)) {
-      favAppTemp.remove(idx);
-    } else {
-      favAppTemp.add(idx);
-    }
-    notifyListeners();
-  }
-
-  void eraseOne(idx) {
-    favAppTemp.remove(idx);
-    notifyListeners();
-  }
-
-  void resetFav() {
-    // print('temp $favAppTemp');
-    // print('ori $favApp');
-    favAppTemp = List<int>.from(favApp);
-    // print('temp $favAppTemp');
-    // print('ori $favApp');
-    notifyListeners();
-  }
-
-  // void saveFav() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   favApp = List<int>.from(favAppTemp);
-  //   prefs.setStringList('favApp', favApp.map((app) => app.toString()).toList());
-  //   notifyListeners();
-  // }
-}
-
-List getFavData(nrp) {
-  List data = getStudData('favApp', nrp);
-  // print(data);
-  return data;
-}
-
 // menampilkan bottomsheet
-Future botSheetEdit(context, nrp) async {
+Future botSheetEdit(context, nrp) {
+  final favAppHandler = Provider.of<FavAppHandler>(context, listen: false);
   double screenHeight = MediaQuery.of(context).size.height;
   double desiredHeight = 0.83 * screenHeight;
-  // final tappedState = Provider.of<TappedState>(context, listen: false);
-  // return Text(getFavData(nrp).toString());
   userNRP = nrp;
+  favAppHandler.copyFav = [...getFavData(nrp)];
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).colorScheme.background,
       context: context,
@@ -112,26 +95,24 @@ Future botSheetEdit(context, nrp) async {
               const SizedBox(height: 10),
               Expanded(
                   child: ListView.builder(
-                itemCount: dataApplication.length,
+                itemCount: appData.length,
                 itemBuilder: (context, index) {
-                  final data = dataApplication[(index + 1).toString()];
-                  return appListEdit(data, index + 1, context);
-                  // print(userNRP);
-                  // return Text(favAppTemp.toString());
+                  final data = appData[(index)];
+                  // return Text(data.toString());
+                  return renderAppListEdit(data, index, context);
                 },
               )),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Consumer<TappedState>(
-                    builder: (context, tappedState, child) {
-                      return Text('${tappedState.favLen} Selected');
+                  Consumer<FavAppHandler>(
+                    builder: (context, favAppHandler, child) {
+                      return Text('${favAppHandler.favLen} Selected');
                     },
                   ),
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      // tappedState.resetFav();
                       Navigator.pop(context);
                     },
                     child: Text(
@@ -144,7 +125,7 @@ Future botSheetEdit(context, nrp) async {
                   ),
                   TextButton(
                     onPressed: () {
-                      // tappedState.saveFav();
+                      print(favAppHandler.copyFav);
                       Navigator.pop(context);
                     },
                     child: Text(
@@ -164,31 +145,31 @@ Future botSheetEdit(context, nrp) async {
   // .whenComplete(() => colorChangingState.clearFav());
 }
 
-Widget appListEdit(data, idx, context) {
-  final tappedState = Provider.of<TappedState>(context, listen: false);
-  final isFav = Provider.of<TappedState>(context).isFav(idx);
-  final maxLen = tappedState.favLen < 8;
+Widget renderAppListEdit(data, idx, context) {
+  final favAppHandler = Provider.of<FavAppHandler>(context);
+  bool isSelected = favAppHandler.isFav(idx);
+  final maxLen = favAppHandler.favLen < 8;
   return Container(
     margin: const EdgeInsets.only(bottom: 12),
     decoration: BoxDecoration(
-        color: isFav ? itsBlue.withAlpha(100) : Colors.transparent,
+        color: isSelected ? itsBlue.withAlpha(100) : Colors.transparent,
         border: Border.all(width: 1),
         borderRadius: BorderRadius.circular(12)),
     child: InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
         if (maxLen) {
-          tappedState.toggleTap(idx);
-          // print('${data['nama']} tertekan');
+          favAppHandler.toggleTap(idx);
         } else {
-          tappedState.eraseOne(idx);
+          favAppHandler.eraseOne(idx);
         }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Row(
           children: [
-            Image.asset(data['gambar'], height: 35),
+            Image.network(data['gambar'], height: 35),
+            const SizedBox(width: 15),
             Text(data['nama']),
           ],
         ),

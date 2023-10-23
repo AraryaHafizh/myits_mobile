@@ -7,9 +7,14 @@ import 'package:myits_portal/settings/notification_controls.dart';
 import 'package:myits_portal/settings/theme_controls.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final prefs = await SharedPreferences.getInstance();
   final isLogin = prefs.getBool('islogin') ?? false;
   final isDarkMode = prefs.getBool('isDarkMode') ?? false;
@@ -22,7 +27,7 @@ void main() async {
         // ChangeNotifierProvider(create: (_) => ThemeSelector()),
         ChangeNotifierProvider(create: (_) => LanguageSelector()),
         ChangeNotifierProvider(create: (_) => NotificationSelector()),
-        ChangeNotifierProvider(create: (_) => TappedState()),
+        ChangeNotifierProvider(create: (_) => FavAppHandler()),
       ],
       child: MyApp(
           isLogin: isLogin,

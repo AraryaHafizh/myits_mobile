@@ -3,36 +3,22 @@ import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/style.dart';
 
 // -------------- agenda page skeleton  --------------
-Widget showAgenda(context, data) {
+Widget showAgenda(context) {
   return Expanded(
-    child: FutureBuilder<void>(
-      future: data,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return GridView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: dataAgenda.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: (3 / 3.7),
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              crossAxisCount: 2,
-            ),
-            itemBuilder: ((BuildContext context, index) {
-              final data = dataAgenda[(index + 1).toString()];
-              return agendaList(context, data);
-            }),
-          );
-        }
-      },
+      child: GridView.builder(
+    padding: EdgeInsets.zero,
+    itemCount: agendaData.length,
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      childAspectRatio: (3 / 3.7),
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      crossAxisCount: 2,
     ),
-  );
+    itemBuilder: ((BuildContext context, index) {
+      final data = agendaData[(index)];
+      return agendaList(context, data);
+    }),
+  ));
 }
 
 // -------------- agenda list  --------------

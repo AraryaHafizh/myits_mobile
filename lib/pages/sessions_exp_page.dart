@@ -90,24 +90,24 @@ class _LoginPageState extends State<ResetPassPage> {
 
   // -------------- NRP & password checker --------------
 
-  void userInputCheck() {
-    var nrp = int.tryParse(_nrpInput.text);
-    String password = _passwordInput.text;
-    bool isLoggedIn = false;
-    dataMhs.forEach((key, value) {
-      if (key == nrp && value['password'] == password) {
-        isLoggedIn = true;
-      }
-    });
-    if (isLoggedIn) {
-      // _login();
-      debugPrint('login berhasil');
-      return;
-    } else {
-      errorDialog();
-      debugPrint('login tidak berhasil');
-    }
-  }
+  // void userInputCheck() {
+  //   var nrp = int.tryParse(_nrpInput.text);
+  //   String password = _passwordInput.text;
+  //   bool isLoggedIn = false;
+  //   dataMhs.forEach((key, value) {
+  //     if (key == nrp && value['password'] == password) {
+  //       isLoggedIn = true;
+  //     }
+  //   });
+  //   if (isLoggedIn) {
+  //     // _login();
+  //     debugPrint('login berhasil');
+  //     return;
+  //   } else {
+  //     errorDialog();
+  //     debugPrint('login tidak berhasil');
+  //   }
+  // }
 
   // -------------- message jika user input salah  --------------
 

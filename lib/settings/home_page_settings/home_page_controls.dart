@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/home_page_settings/fav_app_controls.dart';
 
-
 // -------------- appbar handler  --------------
 appBarHandler(context) {
   return AppBar(
@@ -27,15 +26,15 @@ appBarHandler(context) {
 }
 
 // -------------- banner handler --------------
-Widget bannerHandler(context, nrp) {
+Widget bannerHandler(context, int nrp) {
   return Center(
     child: SizedBox(
       // width: 375,
       width: MediaQuery.of(context).size.width - 35,
       child: CarouselSlider(
           items: [
-            nameCard(nrp, context),
-            ...dataBanner.map((data) => loadBanners(data)).toList(),
+            nameCard(context, nrp),
+            ...bannerData.map((data) => loadBanners(data)).toList(),
           ],
           options: CarouselOptions(
             enlargeCenterPage: true,
@@ -50,7 +49,7 @@ Widget bannerHandler(context, nrp) {
   );
 }
 
-Widget nameCard(nrp, context) {
+Widget nameCard(context, int nrp) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
     decoration: BoxDecoration(
@@ -283,8 +282,8 @@ Widget reminder(context) {
   );
 }
 
-// -------------- app launcher --------------
-Widget appLauncher(context, nrp) {
+// -------------- app shelf --------------
+Widget appShelf(context, int nrp) {
   return Column(
     children: [
       Padding(
@@ -292,13 +291,14 @@ Widget appLauncher(context, nrp) {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            // Text(bannerData.toString()),
             Text('Quick Apps',
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
                     .copyWith(fontWeight: FontWeight.w900, fontSize: 18)),
             const Spacer(),
-            editFavApp(context, nrp)
+            openEditFavApp(context, nrp)
           ],
         ),
       ),
@@ -310,7 +310,6 @@ Widget appLauncher(context, nrp) {
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: (3 / 4.7),
-                // childAspectRatio: (320 / 500),
                 crossAxisCount: 2,
                 crossAxisSpacing: 5.0,
                 mainAxisSpacing: 5.0,
@@ -321,7 +320,7 @@ Widget appLauncher(context, nrp) {
                 if (index == getFavData(nrp).length) {
                   return openAll(context);
                 } else {
-                  return appListMaker(getFavData(nrp)[index], context);
+                  return renderApp(context, getFavData(nrp)[index]);
                 }
               },
             ),
@@ -358,7 +357,7 @@ Widget openAll(context) {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
-                  .copyWith(fontWeight: FontWeight.w500, fontSize: 10),
+                  .copyWith(fontWeight: FontWeight.normal, fontSize: 11),
             ),
           ],
         ),
@@ -386,6 +385,7 @@ Future botSheet(context) {
           child: SingleChildScrollView(
             child: Column(
               children: getTags(context).map((tag) {
+                // return Text(tag);
                 return appByTag(context, tag);
               }).toList(),
             ),
@@ -394,10 +394,27 @@ Future botSheet(context) {
       }));
 }
 
-Widget appByTag(context, tags) {
-  List<String> appKeys = dataApplication.keys.where((key) {
-    return dataApplication[key]['tags'] == tags;
-  }).toList();
+List<String> getTags(BuildContext context) {
+  List<String> appTags = [];
+  for (var items in appData) {
+    if (items['tags'] == 'Aset, Arsip dan Perkantoran') {
+      appTags.add('Aset, Arsip dan Perkantoran');
+    } else {
+      appTags.add(items['tags']);
+    }
+  }
+  appTags = appTags.toSet().toList();
+  // print(appTags);
+  return appTags;
+}
+
+Widget appByTag(context, String tags) {
+  List<int> appIdx = [];
+  for (var items in appData) {
+    if (items['tags'] == tags) {
+      appIdx.add(appData.indexOf(items));
+    }
+  }
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -420,11 +437,9 @@ Widget appByTag(context, tags) {
           ),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: appKeys.length,
+          itemCount: appIdx.length,
           itemBuilder: (BuildContext context, index) {
-            int idx = int.parse(appKeys[index]);
-            // debugPrint(idx.toString());
-            return appListMaker(idx, context);
+            return renderApp(context, appIdx[index]);
           },
         ),
       ),
@@ -432,57 +447,43 @@ Widget appByTag(context, tags) {
   );
 }
 
-Widget appListMaker(int idx, context) {
-  if (dataApplication.containsKey(idx.toString())) {
-    var getValue = dataApplication[idx.toString()];
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        splashColor: const Color.fromARGB(55, 4, 53, 145),
-        borderRadius: BorderRadius.circular(12),
-        onTap: () async {
-          await launchURL(getValue['url']);
-          debugPrint('${getValue['nama']} ditekan!');
-        },
-        child: Ink(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                getValue['gambar'],
-                width: 58,
-                height: 58,
-              ),
-              Text(
-                getValue['nama'],
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontWeight: FontWeight.w500, fontSize: 11),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+Widget renderApp(context, int idx) {
+  var getValue = appData[idx];
+  return Material(
+    color: Colors.transparent,
+    child: InkWell(
+      splashColor: const Color.fromARGB(55, 4, 53, 145),
+      borderRadius: BorderRadius.circular(12),
+      onTap: () async {
+        await launchURL(getValue['url']);
+        debugPrint('${getValue['nama']} ditekan!');
+      },
+      child: Ink(
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              getValue['gambar'],
+              width: 41,
+              height: 41,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              getValue['nama'],
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(fontWeight: FontWeight.normal, fontSize: 11),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
-    );
-  } else {
-    // Handle case when idx is not a valid key in dataApplication
-    return const SizedBox(); // You can return an empty widget or some other placeholder.
-  }
-}
-
-List<String> getTags(BuildContext context) {
-  List<String> appTags = [];
-  for (var element in dataApplication.values) {
-    if (element.containsKey('tags')) {
-      appTags.add(element['tags']);
-    }
-  }
-  appTags = appTags.toSet().toList();
-  return appTags;
+    ),
+  );
 }

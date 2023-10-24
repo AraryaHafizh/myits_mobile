@@ -7,7 +7,8 @@ import 'package:firebase_database/firebase_database.dart';
 int userNRP = 0;
 List favApp = getFavData(userNRP);
 // final databaseRef = FirebaseDatabase.instance.ref('$mhsURL/$userNRP');
-final databaseRef = FirebaseDatabase.instance.ref().child('data');
+final databaseRef =
+    FirebaseDatabase.instance.ref().child('data/-NhUGJMvu4UZGRNXOBv6/$userNRP');
 
 List getFavData(nrp) {
   List data = getStudData('favApp', nrp);
@@ -39,6 +40,7 @@ class FavAppHandler extends ChangeNotifier {
 }
 
 void pushNewFav(List newFav) {
+  databaseRef.update({'favApp': newFav});
   // databaseRef.child('data/favApp').set(newFav);
   // databaseRef
   //     .child(userNRP.toString())
@@ -126,6 +128,7 @@ Future botSheetEdit(context, nrp) {
                   TextButton(
                     onPressed: () {
                       print(favAppHandler.copyFav);
+                      pushNewFav(favAppHandler.copyFav);
                       Navigator.pop(context);
                     },
                     child: Text(

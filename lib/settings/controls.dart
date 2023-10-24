@@ -14,7 +14,7 @@ String bannerURL =
 String appURL =
     'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFLTa_HU65ZaKrjjvr.json';
 String mhsURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhS9qciBm6rdP1hTAKd.json';
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhUGJMvu4UZGRNXOBv6.json';
 String announcementURL =
     'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFSDOEdHNNEqf5hUyA.json';
 String agendaURL =
@@ -24,7 +24,7 @@ Map<String, dynamic> dataClass = {};
 
 List<dynamic> bannerData = [];
 List<dynamic> appData = [];
-List<dynamic> mhsData = [];
+Map<String, dynamic> mhsData = {};
 List<dynamic> announcementData = [];
 List<dynamic> agendaData = [];
 
@@ -38,15 +38,11 @@ Future<void> loadDataClass() async {
 // -------------- request data from student --------------
 dynamic getStudData(request, nrp) {
   dynamic reqData;
-  mhsData.forEach((element) {
-    // print(key);
-    if (element['id'] == nrp.toString()) {
-      // print(key);
-      // print(value[request]);
-      reqData = element['data'][request];
+  mhsData.forEach((key, value) {
+    if (key == nrp.toString()) {
+      reqData = value[request];
     }
   });
-  // print(reqData);
   return reqData;
 }
 

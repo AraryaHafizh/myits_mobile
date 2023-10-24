@@ -17,10 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _nrpInput = TextEditingController();
   final TextEditingController _passwordInput = TextEditingController();
 
-
   Future<void> getMhsData() async {
-    final mhsResponse = await dio.get(
-        mhsURL);
+    final mhsResponse = await dio.get(mhsURL);
     if (mhsResponse.statusCode == 200) {
       setState(() {
         mhsData = mhsResponse.data;
@@ -156,16 +154,12 @@ class _LoginPageState extends State<LoginPage> {
     var nrp = int.tryParse(_nrpInput.text);
     String password = _passwordInput.text;
     bool isLoggedIn = false;
-    for (var element in mhsData) {
-      // print(element['id'].runtimeType);
-      // print(password.runtimeType);
-      if (element['id'] == nrp.toString()) {
-        if (element['data']['password'] == password){
-          isLoggedIn = true;
-        }
+    mhsData.forEach((key, value) {
+      if (key == nrp.toString() && value['password'] == password) {
+        print('yes');
+        isLoggedIn = true;
       }
-    }
-
+    });
     if (isLoggedIn) {
       _login();
       print('login berhasil');

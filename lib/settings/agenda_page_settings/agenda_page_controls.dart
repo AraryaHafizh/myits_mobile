@@ -34,6 +34,7 @@ agendaList(context, data) {
         dialogBox(context, data);
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
@@ -43,37 +44,30 @@ agendaList(context, data) {
             ),
           ),
           const SizedBox(height: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-                  decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).navigationBarTheme.indicatorColor,
-                      borderRadius: BorderRadius.circular(6)),
-                  child: Text(
-                    data['date'],
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 9),
-                  )),
-              const SizedBox(height: 2),
-              Text(data['title'],
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontSize: 14),
-                  overflow: TextOverflow.ellipsis),
-            ],
-          ),
+          Container(
+              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).navigationBarTheme.indicatorColor,
+                  borderRadius: BorderRadius.circular(6)),
+              child: Text(
+                data['date'],
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontSize: 9),
+              )),
+          const SizedBox(height: 2),
+          Text(data['title'],
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: 14),
+              overflow: TextOverflow.ellipsis),
           const Spacer(),
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 5, bottom: 5),
+              padding: const EdgeInsets.only(right: 1, bottom: 3),
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(

@@ -17,51 +17,35 @@ void main() async {
   );
   final prefs = await SharedPreferences.getInstance();
   final isLogin = prefs.getBool('islogin') ?? false;
-  final isDarkMode = prefs.getBool('isDarkMode') ?? false;
-  // final isEng = prefs.getBool('isEnglish') ?? true;
-  final isNotified = prefs.getBool('isNotified') ?? true;
 
   runApp(
     MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => ThemeSelector()),
         ChangeNotifierProvider(create: (_) => LanguageSelector()),
         ChangeNotifierProvider(create: (_) => NotificationSelector()),
         ChangeNotifierProvider(create: (_) => FavAppHandler()),
       ],
       child: MyApp(
-          isLogin: isLogin,
-          isDarkMode: isDarkMode,
-          // isEng: isEng,
-          isNotified: isNotified),
+          isLogin: isLogin),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   final bool isLogin;
-  final bool isDarkMode;
-  // final bool isEng;
-  final bool isNotified;
 
   const MyApp(
       {Key? key,
-      required this.isLogin,
-      required this.isDarkMode,
-      // required this.isEng,
-      required this.isNotified})
+      required this.isLogin})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // final themeSelector = Provider.of<ThemeSelector>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'myITS Mobile',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      // themeMode: themeSelector.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      // themeMode: ThemeMode.dark,
       initialRoute: isLogin ? '/homepage' : '/login',
       routes: {
         '/login': (context) => const LoginPage(),

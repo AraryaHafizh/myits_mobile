@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
+import 'package:provider/provider.dart';
 
 // -------------- agenda page skeleton  --------------
 Widget showAgenda(context) {
+  final agendaProvider = Provider.of<AgendaDataProvider>(context, listen: false);
   return Expanded(
       child: GridView.builder(
     padding: EdgeInsets.zero,
-    itemCount: agendaData.length,
+    itemCount: agendaProvider.data.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       childAspectRatio: (3 / 3.7),
       mainAxisSpacing: 10,
@@ -15,7 +18,7 @@ Widget showAgenda(context) {
       crossAxisCount: 2,
     ),
     itemBuilder: ((BuildContext context, index) {
-      final data = agendaData[(index)];
+      final data = agendaProvider.data[(index)];
       return agendaList(context, data);
     }),
   ));
@@ -29,6 +32,10 @@ agendaList(context, data) {
       color: Theme.of(context).colorScheme.secondaryContainer,
     ),
     child: InkWell(
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         print('${data['title']} ditekan!');
         dialogBox(context, data);
@@ -81,7 +88,7 @@ agendaList(context, data) {
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
-                      .copyWith(fontSize: 10, fontWeight: FontWeight.normal),
+                      .copyWith(fontSize: 10, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -102,7 +109,6 @@ dialogBox(context, data) {
           backgroundColor: Theme.of(context).colorScheme.background,
           content: Container(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            height: MediaQuery.of(context).size.height * 0.6,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,15 +123,15 @@ dialogBox(context, data) {
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
-                        .copyWith(fontSize: 18),
+                        .copyWith(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     data['desc'],
                     style: Theme.of(context)
                         .textTheme
-                        .titleLarge!
-                        .copyWith(fontSize: 12, fontWeight: FontWeight.w200),
+                        .bodySmall!
+                        .copyWith(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

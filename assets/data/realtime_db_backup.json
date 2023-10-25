@@ -1,0 +1,689 @@
+{
+  "-NhZvIHt6AKiTb-zQDnn": {
+    "2020001": {
+      "alamat": "Jl. Merdeka No. 123, Jakarta",
+      "email": "lailavaughan@gmail.com",
+      "favApp": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "jurusan": "Teknik Informatika",
+      "nama": "Laila Vaughan",
+      "nomor telepon": "08123456789",
+      "password": "abc123",
+      "semester": 5,
+      "umur": 18
+    },
+    "2020002": {
+      "alamat": "Jl. Jenderal Sudirman No. 45, Bandung",
+      "email": "pearlruiz@gmail.com",
+      "favApp": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "jurusan": "Ekonomi",
+      "nama": "Pearl Ruiz",
+      "nomor telepon": "08234567890",
+      "password": "def456",
+      "semester": 6,
+      "umur": 20
+    },
+    "2020003": {
+      "alamat": "Jl. Airlangga No. 8, Surabaya",
+      "email": "harrydyer@gmail.com",
+      "favApp": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "jurusan": "Psikologi",
+      "nama": "Harry Dyer",
+      "nomor telepon": "08765432109",
+      "password": "ghi789",
+      "semester": 2,
+      "umur": 19
+    },
+    "2020004": {
+      "alamat": "Jl. Veteran No. 5, Yogyakarta",
+      "email": "shivamhines@gmail.com",
+      "favApp": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "jurusan": "Hukum",
+      "nama": "Shivam Hines",
+      "nomor telepon": "08567890123",
+      "password": "jkl012",
+      "semester": 1,
+      "umur": 21
+    },
+    "2020005": {
+      "alamat": "Jl. Wahid Hasyim No. 27, Semarang",
+      "email": "rileyhiggins@gmail.com",
+      "favApp": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "jurusan": "Manajemen",
+      "nama": "Riley Higgins",
+      "nomor telepon": "08901234567",
+      "password": "mno345",
+      "semester": 5,
+      "umur": 22
+    },
+    "2020006": {
+      "alamat": "Jl. Pahlawan No. 10, Malang",
+      "email": "mylesrichards@gmail.com",
+      "favApp": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "jurusan": "Teknik Elektro",
+      "nama": "Myles Richards",
+      "nomor telepon": "08111111111",
+      "password": "pqr678",
+      "semester": 2,
+      "umur": 19
+    },
+    "2020007": {
+      "alamat": "Jl. Surya No. 5, Denpasar",
+      "email": "lilymaymckee@gmail.com",
+      "favApp": [
+        9,
+        10,
+        11
+      ],
+      "jurusan": "Sastra Inggris",
+      "nama": "Lily-May Mckee",
+      "nomor telepon": "08222222222",
+      "password": "stu901",
+      "semester": 4,
+      "umur": 20
+    },
+    "2020008": {
+      "alamat": "Jl. Diponegoro No. 15, Semarang",
+      "email": "luciecotton@gmail.com",
+      "favApp": [
+        12,
+        13
+      ],
+      "jurusan": "Ilmu Komunikasi",
+      "nama": "Lucie Cotton",
+      "nomor telepon": "08333333333",
+      "password": "vwx234",
+      "semester": 6,
+      "umur": 21
+    },
+    "2020009": {
+      "alamat": "Jl. Kusuma No. 7, Yogyakarta",
+      "email": "helenfoley@gmail.com",
+      "favApp": [
+        14,
+        28,
+        30
+      ],
+      "jurusan": "Psikologi",
+      "nama": "Helen Foley",
+      "nomor telepon": "08444444444",
+      "password": "yza567",
+      "semester": 7,
+      "umur": 19
+    },
+    "2020010": {
+      "alamat": "Jl. Gajah Mada No. 20, Jakarta",
+      "email": "alizamiller@gmail.com",
+      "favApp": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "jurusan": "Manajemen",
+      "nama": "Aliza Miller",
+      "nomor telepon": "08555555555",
+      "password": "bcd678",
+      "semester": 3,
+      "umur": 22
+    },
+    "2020011": {
+      "alamat": "Jl. Imam Bonjol No. 18, Bandung",
+      "email": "faisalberg@gmail.com",
+      "favApp": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "jurusan": "Akuntansi",
+      "nama": "Faisal Berg",
+      "nomor telepon": "08666666666",
+      "password": "efg789",
+      "semester": 4,
+      "umur": 20
+    },
+    "2020012": {
+      "alamat": "Jl. Magelang No. 25, Semarang",
+      "email": "herbertbaker@gmail.com",
+      "favApp": [
+        7,
+        8,
+        15
+      ],
+      "jurusan": "Teknik Informatika",
+      "nama": "Herbert Baker",
+      "nomor telepon": "08777777777",
+      "password": "hij012",
+      "semester": 1,
+      "umur": 21
+    },
+    "2020013": {
+      "alamat": "Jl. Diponegoro No. 12, Surabaya",
+      "email": "shaniahardin@gmail.com",
+      "favApp": [
+        9,
+        2,
+        25
+      ],
+      "jurusan": "Ilmu Komunikasi",
+      "nama": "Shania Hardin",
+      "nomor telepon": "08888888888",
+      "password": "klm345",
+      "semester": 3,
+      "umur": 19
+    },
+    "2020014": {
+      "alamat": "Jl. Hayam Wuruk No. 30, Jakarta",
+      "email": "kathryncain@gmail.com",
+      "favApp": [
+        10,
+        9,
+        12
+      ],
+      "jurusan": "Hukum",
+      "nama": "Kathryn Cain",
+      "nomor telepon": "08999999999",
+      "password": "nop678",
+      "semester": 2,
+      "umur": 20
+    },
+    "2020015": {
+      "alamat": "Jl. Sudirman No. 17, Yogyakarta",
+      "email": "reggieweiss@gmail.com",
+      "favApp": [
+        11,
+        1,
+        4
+      ],
+      "jurusan": "Ekonomi",
+      "nama": "Reggie Weiss",
+      "nomor telepon": "08011111111",
+      "password": "pqr901",
+      "semester": 5,
+      "umur": 22
+    },
+    "2020016": {
+      "alamat": "Jl. Wahid Hasyim No. 5, Bandung",
+      "email": "georgiagomez@gmail.com",
+      "favApp": [
+        12,
+        10,
+        1,
+        29
+      ],
+      "jurusan": "Sastra Inggris",
+      "nama": "Georgia Gomez",
+      "nomor telepon": "08122222222",
+      "password": "stu234",
+      "semester": 4,
+      "umur": 21
+    },
+    "2020017": {
+      "alamat": "Jl. Veteran No. 8, Surabaya",
+      "email": "deaconmartin@gmail.com",
+      "favApp": [
+        13,
+        1,
+        19,
+        10,
+        22
+      ],
+      "jurusan": "Manajemen",
+      "nama": "Deacon Martin",
+      "nomor telepon": "08233333333",
+      "password": "vwx567",
+      "semester": 7,
+      "umur": 19
+    },
+    "2020018": {
+      "alamat": "Jl. Diponegoro No. 23, Jakarta",
+      "email": "iwancase@gmail.com",
+      "favApp": [
+        14,
+        3,
+        15
+      ],
+      "jurusan": "Akuntansi",
+      "nama": "Iwan Case",
+      "nomor telepon": "08344444444",
+      "password": "yza890",
+      "semester": 3,
+      "umur": 20
+    },
+    "2020019": {
+      "alamat": "Jl. Gajah Mada No. 15, Yogyakarta",
+      "email": "alannahrivas@gmail.com",
+      "favApp": [
+        15,
+        20,
+        15,
+        3
+      ],
+      "jurusan": "Teknik Elektro",
+      "nama": "Alannah Rivas",
+      "nomor telepon": "08455555555",
+      "password": "bcd123",
+      "semester": 1,
+      "umur": 21
+    },
+    "2020020": {
+      "alamat": "Jl. Sudirman No. 10, Semarang",
+      "email": "teresatrujillo@gmail.com",
+      "favApp": [
+        2,
+        16
+      ],
+      "jurusan": "Psikologi",
+      "nama": "Teresa Trujillo",
+      "nomor telepon": "08566666666",
+      "password": "efg234",
+      "semester": 2,
+      "umur": 22
+    }
+  },
+  "-NhZvVJVRDCmelUcNtUJ": [
+    {
+      "class": "Intro to Programming",
+      "lecture": "Dosen 1",
+      "room": "Tower 2 101",
+      "time": "08:00"
+    },
+    {
+      "class": "Data Structures",
+      "lecture": "Dosen 2",
+      "room": "Tower 3 201",
+      "time": "10:00"
+    },
+    {
+      "class": "Mobile App Development",
+      "lecture": "Dosen 3",
+      "room": "Tower 1 301",
+      "time": "13:30"
+    },
+    {
+      "class": "Web Development",
+      "lecture": "Dosen 4",
+      "room": "Tower 4 401",
+      "time": "15:00"
+    }
+  ],
+  "-NhZv_EAb2aPMOux2uCA": [
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner-dev/DUt6oJemxNxoY7k6oPDMgZn2E4B4X2qEBkohCvEc.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner/1692586690805_tandur.jpeg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner/1692323808952_6.jpeg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner/1692326868483_3.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner/1692325419752_2.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner-dev/j1b3yykwe53aCW8etTAVqiHPqfZTDKhMSz1SdEoL.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner-dev/qqrlkZ2Y3JJ9QP0pCUzQ036mRXobTPrQYUKpOOsu.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner-dev/07uORkl7lW9YsNJp1wQe68fZn2flYKxYtyJ7QCth.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner-dev/7qQA3Y2siPH9KwgUFj3B64TJkv9R8F2agYATX0qJ.jpg",
+    "https://myits-portal.s3.ap-southeast-3.amazonaws.com/banner-dev/2ZVg0Y8HGTUZKge46DC9RPk0IdFe6bGbdrvnXXoC.jpg"
+  ],
+  "-NhZvp75myiUERSGGFMN": [
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Cek-PDDIKTI.png",
+      "nama": "myITS PDDIKTI",
+      "tags": "Akademik",
+      "url": "http://cekpddikti.its.ac.id/auth.php"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Classroom.png",
+      "nama": "myITS Classroom",
+      "tags": "Akademik",
+      "url": "https://classroom.its.ac.id/auth/oidc/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Presensi.png",
+      "nama": "myITS Presensi",
+      "tags": "Akademik",
+      "url": "https://presensi.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Thesis.png",
+      "nama": "myITS Thesis",
+      "tags": "Akademik",
+      "url": "https://thesis.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Wali.png",
+      "nama": "MyITS Wali Web",
+      "tags": "Akademik",
+      "url": "https://wali.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/SIAKAD.png",
+      "nama": "SI Akademik",
+      "tags": "Akademik",
+      "url": "https://akademik.its.ac.id/myitsauth.php"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/SI-Prestasi.png",
+      "nama": "SI Prestasi",
+      "tags": "Akademik",
+      "url": "https://prestasi.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Kinobi.png",
+      "nama": "Kinobi Career Path",
+      "tags": "Kemahasiswaan",
+      "url": "https://kinobi.its.ac.id/auth"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-StudentConnect.png",
+      "nama": "myITS StudentConnect",
+      "tags": "Kemahasiswaan",
+      "url": "https://kemahasiswaan.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Vote.png",
+      "nama": "myITS Vote",
+      "tags": "Kemahasiswaan",
+      "url": "https://vote.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/SIM-ORMAWA.png",
+      "nama": "SIM ORMAWA",
+      "tags": "Kemahasiswaan",
+      "url": "https://ormawa.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/SIM-PKM.png",
+      "nama": "SIM PKM",
+      "tags": "Kemahasiswaan",
+      "url": "https://simpkm.its.ac.id/"
+    },
+    {
+      "gambar": "https://firebasestorage.googleapis.com/v0/b/myits-mobile.appspot.com/o/appIcons%2Fapp-icon.png?alt=media&token=f2d05144-0134-4514-8660-af407770b1a6&_gl=1*1utahbt*_ga*MjA4MzMxNDUwOS4xNjk3MTkwMTk5*_ga_CW55HF8NVT*MTY5ODIwNTE4NC4yNi4xLjE2OTgyMDYwMTQuNTAuMC4w",
+      "nama": "SKEM",
+      "tags": "Kemahasiswaan",
+      "url": "https://akademik.its.ac.id/skem/myitsauth.php"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Services.png",
+      "nama": "myITS Services",
+      "tags": "Kealumnian",
+      "url": "https://myits-services.its.ac.id/auth"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Dorm.png",
+      "nama": "myITS Dorm",
+      "tags": "Fasilitas Kampus",
+      "url": "https://asrama.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Office.png",
+      "nama": "myITS Office",
+      "tags": "Aset, Arsip dan Perkantoran",
+      "url": "https://eperkantoran.its.ac.id/myits-auth"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/SIPMABA.png",
+      "nama": "SIPMABA",
+      "tags": "Penerimaan Mahasiswa baru",
+      "url": "https://sipmaba.its.ac.id/my-its"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Akses-Internet.png",
+      "nama": "Akses Internet",
+      "tags": "Layanan",
+      "url": "https://myits-app.its.ac.id/internet/auth.php"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Microsoft-Azure.png",
+      "nama": "Microsoft Azure",
+      "tags": "Layanan",
+      "url": "https://portal.azure.com/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Microsoft-Teams.png",
+      "nama": "Microsoft Teams",
+      "tags": "Layanan",
+      "url": "https://teams.office.com/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Courier.png",
+      "nama": "myITS Courier",
+      "tags": "Layanan",
+      "url": "https://courier.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-LicenseManagement.png",
+      "nama": "myITS License Management",
+      "tags": "Layanan",
+      "url": "https://license.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-LinkShortener.png",
+      "nama": "myITS Link Shortener",
+      "tags": "Layanan",
+      "url": "https://shortener.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Printing.png",
+      "nama": "myITS Printing",
+      "tags": "Layanan",
+      "url": "https://printing.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-SoftwareHub.png",
+      "nama": "myITS Software Hub",
+      "tags": "Layanan",
+      "url": "https://softwarehub.its.ac.id/auth"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-Survey.png",
+      "nama": "myITS Survey",
+      "tags": "Layanan",
+      "url": "https://kuesioner.its.ac.id/my-its"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/OTP.png",
+      "nama": "One Time Password",
+      "tags": "Layanan",
+      "url": "https://id.its.ac.id/otp/auth.php"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Microsoft-365.png",
+      "nama": "Portal 365",
+      "tags": "Layanan",
+      "url": "https://portal.office.com/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/SIMDOM.png",
+      "nama": "SIMDOM",
+      "tags": "Layanan",
+      "url": "https://simdom.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/Webinar-Booking.png",
+      "nama": "Webinar Booking",
+      "tags": "Layanan",
+      "url": "https://webinar-book.its.ac.id/"
+    },
+    {
+      "gambar": "https://portal.its.ac.id/images/icon-app/myITS-OneData.png",
+      "nama": "myITS OneData",
+      "tags": "Data dan Pelaporan",
+      "url": "https://data.its.ac.id/"
+    },
+    {
+      "gambar": "https://firebasestorage.googleapis.com/v0/b/myits-mobile.appspot.com/o/appIcons%2Fapp-icon.png?alt=media&token=f2d05144-0134-4514-8660-af407770b1a6&_gl=1*1utahbt*_ga*MjA4MzMxNDUwOS4xNjk3MTkwMTk5*_ga_CW55HF8NVT*MTY5ODIwNTE4NC4yNi4xLjE2OTgyMDYwMTQuNTAuMC4w",
+      "nama": "Blog Mhs ITS",
+      "tags": "Aplikasi Lainnya",
+      "url": "https://blog.its.ac.id/wp-admin/admin-ajax.php?action=openid-connect-redirect-authorize"
+    }
+  ],
+  "-NhZvyqd1OrSpeNRxwb-": [
+    {
+      "subtitle": "Hadiri & ikuti sosialisasi pemilihan rektor.",
+      "tags": "Kegiatan",
+      "title": "Sosialisasi Pemilihan Rektor",
+      "url": ""
+    },
+    {
+      "subtitle": "Kompetisi berkebun untuk civitas akademika dan alumni ITS.",
+      "tags": "Kegiatan",
+      "title": "Tandur race",
+      "url": ""
+    },
+    {
+      "subtitle": "Komik Kreativitas dan Inovasi.",
+      "tags": "Kegiatan",
+      "title": "Komik Kreativitas dan Inovasi",
+      "url": ""
+    },
+    {
+      "subtitle": "Prepare to be inspired by our lineup of esteemed speakers and trainers, all of whom bring expertise and experience to the table. CyberDaS 2023 promises an unforgettable opportunity for growth and development in cyber security and data science.",
+      "tags": "Kegiatan",
+      "title": "International Workshop on Cyber Security and Data Science 2023",
+      "url": ""
+    },
+    {
+      "buttonText": "Beri Feedback",
+      "subtitle": "Bagaimana pendapatmu tentang myITS Portal?\nBerikan feedback kamu!",
+      "tags": "Kegiatan",
+      "title": "Formulir Umpan Balik",
+      "url": "https://its.id/feedback-myits-portal"
+    },
+    {
+      "subtitle": "Gowes Sehat \"Tour de Kota Pahlawan\"",
+      "tags": "Kegiatan",
+      "title": "Gowes Sehat \"Tour de Kota Pahlawan\"",
+      "url": ""
+    },
+    {
+      "subtitle": "Pendaftaran Bakal Calon Rektor ITS",
+      "tags": "Kegiatan",
+      "title": "Pendaftaran Bakal Calon Rektor ITS",
+      "url": ""
+    },
+    {
+      "subtitle": "Timeline Pemilihan Rektor ITS 2023",
+      "tags": "Kegiatan",
+      "title": "Timeline Pemilihan Rektor ITS 2023",
+      "url": ""
+    },
+    {
+      "subtitle": "Cek DPT Pemilihan Bacarek",
+      "tags": "Kegiatan",
+      "title": "Cek DPT Pemilihan Bacarek",
+      "url": ""
+    },
+    {
+      "subtitle": "Kompetisi Olahraga Internal Bagi Civitas ITS",
+      "tags": "Kegiatan",
+      "title": "Kompetisi Olahraga Internal Bagi Civitas ITS",
+      "url": ""
+    },
+    {
+      "subtitle": "Outbound Researcher Mobility (ORM) & Inbound Researcher Mobility (IRM)",
+      "tags": "Kegiatan",
+      "title": "Program WCU 2023/2024",
+      "url": ""
+    }
+  ],
+  "-NhZw49cbFF1L7zJIE5B": [
+    {
+      "date": "23 November 2023",
+      "desc": "Autonomus and Smart Innovation In Marine Science and Technology",
+      "image": "https://www.its.ac.id/wp-content/uploads/2023/07/SENTA-2023.jpg",
+      "source": "https://www.its.ac.id/id/agenda/konferensi-internasional-ke-8-tentang-teknologi-kelautan-senta-2023/",
+      "tags": "General",
+      "thumbnail": "https://calendar.its.ac.id/api/image/124",
+      "title": "Konferensi Internasional ke-8 tentang Teknologi Kelautan (SENTA) 2023"
+    },
+    {
+      "date": "18 November 2023",
+      "desc": "Perencanaan Jembatan yang Efisien, Ikonik, dan Inovatif Guna Mendukung Pembangunan Infrastruktur Berkelanjutan",
+      "image": "https://www.its.ac.id/wp-content/uploads/2023/10/Bridge-Construction-Competition-XVII-1-819x1024.png",
+      "source": "https://www.its.ac.id/id/agenda/lomba-pembangunan-jembatan-xvii/",
+      "tags": "General",
+      "thumbnail": "https://calendar.its.ac.id/api/image/138",
+      "title": "Lomba Pembangunan Jembatan XVII"
+    },
+    {
+      "date": "25 Oktober 2023",
+      "desc": "Smart Infrastructure for Sustainable Living",
+      "image": "https://www.its.ac.id/wp-content/uploads/2023/08/poster-CIC-2023.png",
+      "source": "https://www.its.ac.id/id/agenda/konferensi-internasional-civplan-2023/",
+      "tags": "General",
+      "thumbnail": "https://calendar.its.ac.id/api/image/130",
+      "title": "Konferensi Internasional CIVPLAN 2023"
+    },
+    {
+      "date": "25 Oktober 2023",
+      "desc": "International Biology Conference\n   -Conservation of coastal area\n   -Green and clean technology\n   -Geo-marine and mapping application for coastal area\n   -Biodiversity loss and environment degradation\n   -Carbon Market and Policy\n   -Biomolecular and Biotechnology\n   -Genetic and Biotechnology\n   -Physiology and Development\n   -Marine and Coastal Environment\n   -Community resilience and empowerment\n   -Bioinformatics and Data Mining",
+      "image": "https://www.its.ac.id/wp-content/uploads/2023/08/The-6th-International-Biology-Conference-IBOC.jpeg",
+      "source": "https://www.its.ac.id/id/agenda/konferensi-biologi-internasional-ke-6-iboc/",
+      "tags": "General",
+      "thumbnail": "https://calendar.its.ac.id/api/image/131",
+      "title": "Konferensi Biologi Internasional ke-6 (IBOC)"
+    },
+    {
+      "date": "25 Oktober 2023",
+      "desc": "12 th International Conference on Architecture Research and Design 2023 In Conjuction with CIVPLAN’S International Conference (CIC)",
+      "image": "https://www.its.ac.id/wp-content/uploads/2023/08/ARDC-2023.jpeg",
+      "source": "https://www.its.ac.id/id/agenda/konferensi-internasional-ke-12-tentang-penelitian-dan-desain-arsitektur/",
+      "tags": "General",
+      "thumbnail": "https://calendar.its.ac.id/api/image/129",
+      "title": "Konferensi Internasional ke-12 tentang Penelitian dan Desain Arsitektur"
+    },
+    {
+      "date": "15 Oktober 2023",
+      "desc": "Kompetisi Desain Inovasi Produk Solutif Industri Kreatif Otomotif Indonesia",
+      "image": "https://calendar.its.ac.id/api/image/136",
+      "source": "https://www.its.ac.id/id/agenda/kompetisi-desain-inovasi-produk-solutif/",
+      "tags": "General",
+      "thumbnail": "https://calendar.its.ac.id/api/image/136",
+      "title": "Kompetisi Desain Inovasi Produk Solutif"
+    }
+  ]
+}

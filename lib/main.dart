@@ -1,9 +1,12 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/pages/home/home_page.dart';
 import 'package:myits_portal/pages/login/login_page.dart';
 import 'package:myits_portal/settings/home_page_settings/fav_app_controls.dart';
 import 'package:myits_portal/settings/language_controls.dart';
 import 'package:myits_portal/settings/notification_controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
+import 'package:myits_portal/settings/style.dart';
 import 'package:myits_portal/settings/theme_controls.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,12 +24,17 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => MhsDataProvider()),
+        ChangeNotifierProvider(create: (_) => AppDataProvider()),
+        ChangeNotifierProvider(create: (_) => ClassDataProvider()),
+        ChangeNotifierProvider(create: (_) => AnnounceDataProvider()),
+        ChangeNotifierProvider(create: (_) => AgendaDataProvider()),
+        ChangeNotifierProvider(create: (_) => BannerDataProvider()),
         ChangeNotifierProvider(create: (_) => LanguageSelector()),
         ChangeNotifierProvider(create: (_) => NotificationSelector()),
         ChangeNotifierProvider(create: (_) => FavAppHandler()),
       ],
-      child: MyApp(
-          isLogin: isLogin),
+      child: MyApp(isLogin: isLogin),
     ),
   );
 }
@@ -34,10 +42,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool isLogin;
 
-  const MyApp(
-      {Key? key,
-      required this.isLogin})
-      : super(key: key);
+  const MyApp({Key? key, required this.isLogin}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,8 +51,15 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: isLogin ? '/homepage' : '/login',
+      initialRoute: '/',
       routes: {
+        '/': (context) => AnimatedSplashScreen(
+              splash: Image.asset('assets/images/its.png'),
+              backgroundColor: itsBlueStatic,
+              nextScreen: isLogin ? HomePage() : LoginPage(),
+              splashTransition: SplashTransition.fadeTransition,
+              duration: 2000,
+            ),
         '/login': (context) => const LoginPage(),
         '/homepage': (context) => const HomePage(),
       },

@@ -25,8 +25,11 @@ class _AccountPageState extends State<AgendaPage> {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child:
-                  Text('Agenda', style: Theme.of(context).textTheme.titleLarge),
+              child: Text('Agenda',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.w700)),
             ),
             const SizedBox(height: 20),
             showAgenda(context)

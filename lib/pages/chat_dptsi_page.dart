@@ -50,7 +50,11 @@ class OpenChat extends StatelessWidget {
             ),
           ),
           const Divider(),
-          const Spacer(),
+          Expanded(
+            child: Center(
+              child: Text('AI answer will be here.'),
+            ),
+          ),
           const Divider(),
           Row(
             children: [

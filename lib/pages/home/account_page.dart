@@ -42,8 +42,8 @@ class _AccountPageState extends State<AccountPage> {
   // -------------- account page handler  --------------
 
   Widget bodyPage() {
-    String username = getStudData('nama', widget.nrp);
-    String jurusan = getStudData('jurusan', widget.nrp);
+    String username = getStudData(context, 'nama', widget.nrp);
+    String jurusan = getStudData(context, 'jurusan', widget.nrp);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       child: Column(
@@ -53,6 +53,7 @@ class _AccountPageState extends State<AccountPage> {
             child: Column(
               children: [
                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   height: 135,
                   decoration: BoxDecoration(
                       color:
@@ -60,33 +61,34 @@ class _AccountPageState extends State<AccountPage> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(18))),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 30),
-                        child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: itsBlue,
-                            child: Text(
-                              username[0],
-                              style:
-                                  jakarta.copyWith(fontSize: 66, color: white),
-                            )),
-                      ),
-                      const SizedBox(width: 25),
+                      CircleAvatar(
+                          radius: 50,
+                          backgroundColor: itsBlue,
+                          child: Text(
+                            username[0],
+                            style: jakarta.copyWith(fontSize: 66, color: white),
+                          )),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(username,
-                              style: Theme.of(context).textTheme.titleLarge),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 24)),
                           const SizedBox(height: 5),
                           Text(jurusan,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge!
                                   .copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w200)),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal)),
                         ],
                       )
                     ],
@@ -199,8 +201,10 @@ class _AccountPageState extends State<AccountPage> {
           ),
         ),
         title: Text('Language Mode',
-            style:
-                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14)),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
         trailing: Switch(
           value: languageSelector.isEnglish,
           activeColor: Theme.of(context).colorScheme.primary,
@@ -234,8 +238,10 @@ class _AccountPageState extends State<AccountPage> {
           ),
         ),
         title: Text('Notifications',
-            style:
-                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 14)),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
         trailing: Switch(
           value: notificationSelector.isNotified,
           activeColor: Theme.of(context).colorScheme.primary,
@@ -295,7 +301,7 @@ class _AccountPageState extends State<AccountPage> {
         ),
         title: Text('Log Out',
             style: jakarta.copyWith(
-                fontSize: 14, fontWeight: FontWeight.w600, color: Colors.red)),
+                fontSize: 17, fontWeight: FontWeight.w600, color: Colors.red)),
       ),
     );
   }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
+import 'package:provider/provider.dart';
 
 // -------------- announcement page skeleton  --------------
 Widget showAnnouncement(context) {
+  final announcementProvider = Provider.of<AnnounceDataProvider>(context);
   return Expanded(
       child: ListView.builder(
     padding: EdgeInsets.zero,
-    itemCount: announcementData.length,
+    itemCount: announcementProvider.data.length,
     itemBuilder: ((BuildContext context, index) {
-      final data = announcementData[(index)];
+      final data = announcementProvider.data[(index)];
       return announcementList(context, data);
     }),
   ));
@@ -25,6 +28,10 @@ Widget announcementList(context, data) {
       color: Theme.of(context).colorScheme.secondaryContainer,
     ),
     child: InkWell(
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         dialogBox(context, data);
         debugPrint('announcement ${data['title']} ditekan');
@@ -39,13 +46,16 @@ Widget announcementList(context, data) {
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(fontSize: 14),
+                    .copyWith(fontSize: 15, fontWeight: FontWeight.w600),
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 8),
               Text(
                 data['subtitle'],
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
                 overflow: TextOverflow.ellipsis,
               ),
             ],
@@ -65,7 +75,7 @@ Widget announcementList(context, data) {
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(fontSize: 12, fontWeight: FontWeight.normal),
+                    .copyWith(fontSize: 10, fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -85,12 +95,17 @@ dialogBox(context, data) {
           backgroundColor: Theme.of(context).colorScheme.background,
           title: Text(
             data['title'],
-            style:
-                Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 18),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(fontSize: 18, fontWeight: FontWeight.w700),
           ),
           content: SizedBox(
             child: Text(data['subtitle'],
-                style: Theme.of(context).textTheme.bodySmall),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 13)),
           ),
           actions: [
             TextButton(

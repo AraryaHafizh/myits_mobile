@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/home_page_settings/fav_app_controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
+import 'package:provider/provider.dart';
 
 // -------------- appbar handler  --------------
 appBarHandler(context) {
@@ -27,14 +29,15 @@ appBarHandler(context) {
 
 // -------------- banner handler --------------
 Widget bannerHandler(context, int nrp) {
+  final bannerProvider = Provider.of<BannerDataProvider>(context, listen: false);
   return Center(
     child: SizedBox(
       // width: 375,
       width: MediaQuery.of(context).size.width - 35,
       child: CarouselSlider(
           items: [
-            nameCard(context, nrp),
-            ...bannerData.map((data) => loadBanners(data)).toList(),
+            nameBanner(context, nrp),
+            ...bannerProvider.data.map((data) => loadBanners(data)).toList(),
           ],
           options: CarouselOptions(
             enlargeCenterPage: true,
@@ -49,16 +52,13 @@ Widget bannerHandler(context, int nrp) {
   );
 }
 
-Widget nameCard(context, int nrp) {
+Widget nameBanner(context, int nrp) {
   return Container(
-    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
     decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer,
         borderRadius: BorderRadius.circular(12)),
-    child:
-        // Text(getStudData('jurusan', nrp).toString())
-        Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,32 +69,35 @@ Widget nameCard(context, int nrp) {
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(fontSize: 20),
+                    .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
-              Text(getStudData('nama', nrp),
-                  style: Theme.of(context).textTheme.titleLarge)
+              Text(getStudData(context, 'nama', nrp),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.w800))
             ]),
         Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                getStudData('jurusan', nrp),
+                getStudData(context, 'jurusan', nrp),
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.normal),
               ),
               const SizedBox(
                 height: 1,
               ),
               Text(
-                'Semester ${getStudData('semester', nrp)}',
+                'Semester ${getStudData(context, 'semester', nrp)}',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(fontSize: 14, fontWeight: FontWeight.w300),
+                    .copyWith(fontSize: 14, fontWeight: FontWeight.normal),
               )
             ])
       ],
@@ -103,19 +106,14 @@ Widget nameCard(context, int nrp) {
 }
 
 Widget loadBanners(data) {
-  return InkWell(
-    onTap: () {
-      debugPrint('Banner ditekan');
-    },
-    child: SizedBox(
-      width: double.infinity,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.network(
-            data,
-            fit: BoxFit.cover,
-          )),
-    ),
+  return SizedBox(
+    width: double.infinity,
+    child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.network(
+          data,
+          fit: BoxFit.cover,
+        )),
   );
 }
 
@@ -131,6 +129,7 @@ Widget homeCarousel(context) {
 
 // -------------- class list --------------
 Widget todayClass(context) {
+  final classProvider = Provider.of<ClassDataProvider>(context, listen: false);
   return Column(
     children: [
       Row(
@@ -139,7 +138,7 @@ Widget todayClass(context) {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
-                  .copyWith(fontWeight: FontWeight.w900, fontSize: 18)),
+                  .copyWith(fontWeight: FontWeight.w800, fontSize: 18)),
         ],
       ),
       const SizedBox(height: 10),
@@ -149,9 +148,9 @@ Widget todayClass(context) {
         child: ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
-            itemCount: dataClass.length,
+            itemCount: classProvider.data.length,
             itemBuilder: (BuildContext context, index) {
-              final data = dataClass[(index + 1).toString()];
+              final data = classProvider.data[(index)];
               return classList(context, data);
             }),
       ),
@@ -176,7 +175,10 @@ Widget classList(context, data) {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(data['time'],
-                    style: Theme.of(context).textTheme.bodyMedium),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w900)),
                 Text('WIB', style: Theme.of(context).textTheme.bodySmall)
               ]),
         ),
@@ -192,7 +194,10 @@ Widget classList(context, data) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('${data['class']}',
-                    style: Theme.of(context).textTheme.bodyMedium),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w800)),
                 const SizedBox(
                   height: 5,
                 ),
@@ -270,10 +275,8 @@ Widget reminder(context) {
           child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              itemCount: dataClass.length,
+              itemCount: 1,
               itemBuilder: (BuildContext context, index) {
-                final data = dataClass[(index + 1).toString()];
-                return Text('reminder');
                 // return classList(data, context);
               }),
         ),
@@ -284,6 +287,7 @@ Widget reminder(context) {
 
 // -------------- app shelf --------------
 Widget appShelf(context, int nrp) {
+  final mhsHandler = Provider.of<MhsDataProvider>(context);
   return Column(
     children: [
       Padding(
@@ -296,7 +300,7 @@ Widget appShelf(context, int nrp) {
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!
-                    .copyWith(fontWeight: FontWeight.w900, fontSize: 18)),
+                    .copyWith(fontWeight: FontWeight.w800, fontSize: 18)),
             const Spacer(),
             openEditFavApp(context, nrp)
           ],
@@ -315,12 +319,12 @@ Widget appShelf(context, int nrp) {
                 mainAxisSpacing: 5.0,
               ),
               scrollDirection: Axis.horizontal,
-              itemCount: getFavData(nrp).length + 1,
+              itemCount: mhsHandler.getFavApp('favApp', nrp).length + 1,
               itemBuilder: (BuildContext context, index) {
-                if (index == getFavData(nrp).length) {
+                if (index == mhsHandler.getFavApp('favApp', nrp).length) {
                   return openAll(context);
                 } else {
-                  return renderApp(context, getFavData(nrp)[index]);
+                  return renderApp(context, mhsHandler.getFavApp('favApp', nrp)[index]);
                 }
               },
             ),
@@ -348,7 +352,7 @@ Widget openAll(context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/appLogos/allApps.png',
+              'assets/images/allApps.png',
               width: 58,
               height: 58,
             ),
@@ -357,7 +361,7 @@ Widget openAll(context) {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
-                  .copyWith(fontWeight: FontWeight.normal, fontSize: 11),
+                  .copyWith(fontWeight: FontWeight.w600, fontSize: 11),
             ),
           ],
         ),
@@ -394,9 +398,10 @@ Future botSheet(context) {
       }));
 }
 
-List<String> getTags(BuildContext context) {
+List<String> getTags(context) {
+  final appHandler = Provider.of<AppDataProvider>(context, listen: false);
   List<String> appTags = [];
-  for (var items in appData) {
+  for (var items in appHandler.data) {
     if (items['tags'] == 'Aset, Arsip dan Perkantoran') {
       appTags.add('Aset, Arsip dan Perkantoran');
     } else {
@@ -409,10 +414,11 @@ List<String> getTags(BuildContext context) {
 }
 
 Widget appByTag(context, String tags) {
+  final appHandler = Provider.of<AppDataProvider>(context, listen: false);
   List<int> appIdx = [];
-  for (var items in appData) {
+  for (var items in appHandler.data) {
     if (items['tags'] == tags) {
-      appIdx.add(appData.indexOf(items));
+      appIdx.add(appHandler.data.indexOf(items));
     }
   }
 
@@ -423,8 +429,8 @@ Widget appByTag(context, String tags) {
         tags,
         style: Theme.of(context)
             .textTheme
-            .titleLarge!
-            .copyWith(fontWeight: FontWeight.w900, fontSize: 16),
+            .bodySmall!
+            .copyWith(fontWeight: FontWeight.w800, fontSize: 19),
       ),
       const SizedBox(height: 10),
       Container(
@@ -448,7 +454,8 @@ Widget appByTag(context, String tags) {
 }
 
 Widget renderApp(context, int idx) {
-  var getValue = appData[idx];
+  final appHandler = Provider.of<AppDataProvider>(context);
+  var getValue = appHandler.data[idx];
   return Material(
     color: Colors.transparent,
     child: InkWell(
@@ -478,7 +485,7 @@ Widget renderApp(context, int idx) {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
-                  .copyWith(fontWeight: FontWeight.normal, fontSize: 11),
+                  .copyWith(fontWeight: FontWeight.w600, fontSize: 11),
               textAlign: TextAlign.center,
             ),
           ],

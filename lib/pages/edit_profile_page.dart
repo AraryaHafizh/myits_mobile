@@ -25,10 +25,10 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    username = getStudData('nama', widget.nrp);
-    email = getStudData('email', widget.nrp);
-    phone = getStudData('nomor telepon', widget.nrp);
-    password = getStudData('password', widget.nrp);
+    username = getStudData(context, 'nama', widget.nrp);
+    email = getStudData(context, 'email', widget.nrp);
+    phone = getStudData(context, 'nomor telepon', widget.nrp);
+    password = getStudData(context, 'password', widget.nrp);
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   alertDialog();
     // });
@@ -64,7 +64,11 @@ class _EditProfileState extends State<EditProfile> {
             Icons.arrow_back_ios_rounded,
             color: Theme.of(context).colorScheme.onSecondary,
           )),
-      title: Text('My Profile', style: Theme.of(context).textTheme.titleLarge),
+      title: Text('My Profile',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.w700)),
     );
   }
 
@@ -141,23 +145,24 @@ class _EditProfileState extends State<EditProfile> {
         print('profile saved!');
       },
       style: ElevatedButton.styleFrom(
+        fixedSize: Size(100, 45),
         backgroundColor: itsBlue,
         elevation: 5,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 45),
+        // padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 45),
         shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.circular(15), // Atur radius sesuai kebutuhan
         ),
       ),
       child: Text('Save',
-          style: jakarta.copyWith(fontSize: 14, color: Colors.white)),
+          style: jakarta.copyWith(fontSize: 18, color: Colors.white)),
     );
   }
 
   void pushNewDat(String name, String phone, String pass) {
     final databaseRef = FirebaseDatabase.instance
         .ref()
-        .child('data/-NhUGJMvu4UZGRNXOBv6/${widget.nrp}');
+        .child('data/-NhZvIHt6AKiTb-zQDnn/${widget.nrp}');
 
     Map<String, dynamic> updatedData = {};
 

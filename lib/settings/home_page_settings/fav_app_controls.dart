@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 int userNRP = 0;
-List favApp = getFavData(userNRP);
-// final databaseRef = FirebaseDatabase.instance.ref('$mhsURL/$userNRP');
 final databaseRef =
-    FirebaseDatabase.instance.ref().child('data/-NhUGJMvu4UZGRNXOBv6/$userNRP');
-
-List getFavData(nrp) {
-  List data = getStudData('favApp', nrp);
-  // print(data);
-  return data;
-}
+    FirebaseDatabase.instance.ref().child('data/-NhZvIHt6AKiTb-zQDnn/$userNRP');
 
 class FavAppHandler extends ChangeNotifier {
   List copyFav = [];
@@ -41,17 +34,12 @@ class FavAppHandler extends ChangeNotifier {
 
 void pushNewFav(List newFav) {
   databaseRef.update({'favApp': newFav});
-  // databaseRef.child('data/favApp').set(newFav);
-  // databaseRef
-  //     .child(userNRP.toString())
-  //     .child("data")
-  //     .update({"favApp": newFav});
 }
 
 Widget openEditFavApp(BuildContext context, nrp) {
   return InkWell(
       onTap: () {
-        debugPrint('tomnol ditekan');
+        print(userNRP);
         botSheetEdit(context, nrp).then((value) {
           userNRP = nrp;
         });
@@ -62,16 +50,18 @@ Widget openEditFavApp(BuildContext context, nrp) {
           style: Theme.of(context)
               .textTheme
               .bodySmall!
-              .copyWith(fontWeight: FontWeight.w900)));
+              .copyWith(fontWeight: FontWeight.w600)));
 }
 
 // menampilkan bottomsheet
 Future botSheetEdit(context, nrp) {
   final favAppHandler = Provider.of<FavAppHandler>(context, listen: false);
+  final appHandler = Provider.of<AppDataProvider>(context, listen: false);
   double screenHeight = MediaQuery.of(context).size.height;
   double desiredHeight = 0.83 * screenHeight;
   userNRP = nrp;
-  favAppHandler.copyFav = [...getFavData(nrp)];
+  favAppHandler.copyFav = [...getStudData(context, 'favApp', nrp)];
+  // favAppHandler.copyFav = [...getFavData(context, nrp)];
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).colorScheme.background,
       context: context,
@@ -97,9 +87,9 @@ Future botSheetEdit(context, nrp) {
               const SizedBox(height: 10),
               Expanded(
                   child: ListView.builder(
-                itemCount: appData.length,
+                itemCount: appHandler.data.length,
                 itemBuilder: (context, index) {
-                  final data = appData[(index)];
+                  final data = appHandler.data[(index)];
                   // return Text(data.toString());
                   return renderAppListEdit(data, index, context);
                 },

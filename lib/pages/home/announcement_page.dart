@@ -25,10 +25,11 @@ class _AnnouncementState extends State<Announcement> {
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: Text(
-                'Announcements',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              child: Text('Announcements',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.w700)),
             ),
             const SizedBox(height: 20),
             showAnnouncement(context),

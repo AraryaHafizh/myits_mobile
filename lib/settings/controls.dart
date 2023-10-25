@@ -1,44 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:myits_portal/pages/chat_dptsi_page.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/style.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
 
 final dio = Dio();
 
 // -------------- load json data  --------------
 String bannerURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFSVgMHQbDkrkoyJ5m.json';
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZv_EAb2aPMOux2uCA.json';
 String appURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFLTa_HU65ZaKrjjvr.json';
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZvp75myiUERSGGFMN.json';
 String mhsURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhUGJMvu4UZGRNXOBv6.json';
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZvIHt6AKiTb-zQDnn.json';
 String announcementURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFSDOEdHNNEqf5hUyA.json';
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZvyqd1OrSpeNRxwb-.json';
 String agendaURL =
-    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFKvjMi1HWCfaFQzGe.json';
-
-Map<String, dynamic> dataClass = {};
-
-List<dynamic> bannerData = [];
-List<dynamic> appData = [];
-Map<String, dynamic> mhsData = {};
-List<dynamic> announcementData = [];
-List<dynamic> agendaData = [];
-
-Future<void> loadDataClass() async {
-  // await Future.delayed(const Duration(seconds: 1)); //simulate loading
-  final String jsonData =
-      await rootBundle.loadString('assets/data/data_class.json');
-  dataClass = json.decode(jsonData);
-}
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZw49cbFF1L7zJIE5B.json';
+String classScheduleURL =
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZvVJVRDCmelUcNtUJ.json';
 
 // -------------- request data from student --------------
-dynamic getStudData(request, nrp) {
+dynamic getStudData(context, request, nrp) {
+  final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
   dynamic reqData;
-  mhsData.forEach((key, value) {
+  mhsProvider.data.forEach((key, value) {
     if (key == nrp.toString()) {
       reqData = value[request];
     }

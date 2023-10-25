@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/pages/login/reset_pass_page.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,21 +19,23 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _nrpInput = TextEditingController();
   final TextEditingController _passwordInput = TextEditingController();
 
-  Future<void> getMhsData() async {
-    final mhsResponse = await dio.get(mhsURL);
-    if (mhsResponse.statusCode == 200) {
-      setState(() {
-        mhsData = mhsResponse.data;
-      });
-    } else {
-      debugPrint('Gagal mengambil data dari API');
-    }
-  }
+  // Future<void> getMhsData() async {
+  //   final mhsResponse = await dio.get(mhsURL);
+  //   if (mhsResponse.statusCode == 200) {
+  //     setState(() {
+  //       mhsData = mhsResponse.data;
+  //     });
+  //   } else {
+  //     debugPrint('Gagal mengambil data dari API');
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    getMhsData();
+    // Panggil fetchDataFromAPI dari provider untuk mengambil data
+    final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
+    mhsProvider.fetchDataFromAPI();
   }
 
   Future<void> _login() async {
@@ -141,20 +145,21 @@ class _LoginPageState extends State<LoginPage> {
         padding: MaterialStateProperty.all<EdgeInsets>(
             const EdgeInsets.symmetric(horizontal: 22, vertical: 12)),
       ),
-      child: Text(
-        'Log In',
-        style: jakarta.copyWith(fontSize: 14, color: Colors.black),
-      ),
+      child: Text('Log In',
+          style: jakarta.copyWith(fontSize: 14, color: Colors.black)),
     );
   }
 
   // -------------- NRP & password checker --------------
 
   void userInputCheck() {
+    final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
     var nrp = int.tryParse(_nrpInput.text);
     String password = _passwordInput.text;
     bool isLoggedIn = false;
-    mhsData.forEach((key, value) {
+
+    mhsProvider.data.forEach((key, value) {
+      // print(key);
       if (key == nrp.toString() && value['password'] == password) {
         print('yes');
         isLoggedIn = true;

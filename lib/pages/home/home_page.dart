@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:myits_portal/pages/sessions_exp_page.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/pages/home/account_page.dart';
 import 'package:myits_portal/pages/home/agenda_page.dart';
 import 'package:myits_portal/pages/home/announcement_page.dart';
-import 'package:myits_portal/pages/login/login_page.dart';
 import 'package:myits_portal/settings/home_page_settings/home_page_controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,78 +19,43 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
-  late Future<void> loadClass;
-
-  Future<void> getBannerData() async {
-    final bannerResponse = await dio.get(
-        bannerURL);
-    if (bannerResponse.statusCode == 200) {
-      setState(() {
-        bannerData = bannerResponse.data;
-      });
-    } else {
-      debugPrint('Gagal mengambil data dari API');
-    }
-  }
-
-  Future<void> getAppData() async {
-    final appResponse = await dio.get(
-        appURL);
-    if (appResponse.statusCode == 200) {
-      setState(() {
-        appData = appResponse.data;
-      });
-    } else {
-      debugPrint('Gagal mengambil data dari API');
-    }
-  }
-
-  Future<void> getMhsData() async {
-    final mhsResponse = await dio.get(
-        mhsURL);
-    if (mhsResponse.statusCode == 200) {
-      setState(() {
-        mhsData = mhsResponse.data;
-      });
-    } else {
-      debugPrint('Gagal mengambil data dari API');
-    }
-  }
-
-  Future<void> getAnnouncementData() async {
-    final announcementResponse = await dio.get(
-        announcementURL);
-    if (announcementResponse.statusCode == 200) {
-      setState(() {
-        announcementData = announcementResponse.data;
-      });
-    } else {
-      debugPrint('Gagal mengambil data dari API');
-    }
-  }
-
-  Future<void> getAgendaData() async {
-    final agendaResponse = await dio.get(
-        agendaURL);
-    if (agendaResponse.statusCode == 200) {
-      setState(() {
-        agendaData = agendaResponse.data;
-      });
-    } else {
-      debugPrint('Gagal mengambil data dari API');
-    }
-  }
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    loadClass = loadDataClass();
-    // loadBanner = loadDataBanner();
-    getBannerData();
-    getAppData();
-    getMhsData();
-    getAnnouncementData();
-    getAgendaData();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
+    final appProvider = Provider.of<AppDataProvider>(context, listen: false);
+    final classProvider =
+        Provider.of<ClassDataProvider>(context, listen: false);
+    final announceProvider =
+        Provider.of<AnnounceDataProvider>(context, listen: false);
+    final agendaProvider =
+        Provider.of<AgendaDataProvider>(context, listen: false);
+    final bannerProvider =
+        Provider.of<BannerDataProvider>(context, listen: false);
+    final futures = [
+      mhsProvider.fetchDataFromAPI(),
+      appProvider.fetchDataFromAPI(),
+      classProvider.fetchDataFromAPI(),
+      announceProvider.fetchDataFromAPI(),
+      agendaProvider.fetchDataFromAPI(),
+      bannerProvider.fetchDataFromAPI(),
+    ];
+
+    try {
+      await Future.wait(futures);
+    } catch (error) {
+      print('Error: $error');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -97,9 +64,6 @@ class _HomePageState extends State<HomePage> {
       child: SizedBox(
         width: 510,
         child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          // backgroundColor: Theme.of(context).colorScheme.background,
-          appBar: appBarHandler(context),
           body: FutureBuilder<bool>(
             future: SharedPreferences.getInstance()
                 .then((prefs) => prefs.getBool('islogin') ?? false),
@@ -107,7 +71,15 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                print('error: ${snapshot.error}');
+                return Text('');
+              } else if (isLoading) {
+                return Container(
+                  color: itsBlueStatic,
+                  child: Center(
+                    child: Image.asset('assets/images/its.png', width: 83),
+                  ),
+                );
               } else {
                 final isLogin = snapshot.data ?? false;
                 if (isLogin) {
@@ -121,50 +93,34 @@ class _HomePageState extends State<HomePage> {
                               child: CircularProgressIndicator());
                         } else if (snapshot.hasError ||
                             nrpSnapshot.data == null) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Error: ${nrpSnapshot.error}'),
-                            ],
-                          );
+                          print('error: ${snapshot.error}');
+                          return Text('');
                         } else {
                           final nrp = nrpSnapshot.data!;
 
-                          // return Text(nrp.toString());
-                          return <Widget>[
-                            homePage(nrp),
-                            const AgendaPage(),
-                            const Announcement(),
-                            AccountPage(
-                              nrp: nrp,
-                            ),
-                          ][currentPageIndex];
+                          return Scaffold(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
+                            appBar: appBarHandler(context),
+                            body: <Widget>[
+                              homePage(nrp),
+                              const AgendaPage(),
+                              const Announcement(),
+                              AccountPage(
+                                nrp: nrp,
+                              ),
+                            ][currentPageIndex],
+                            bottomNavigationBar: navBar(),
+                            floatingActionButton: msgButton(context),
+                          );
                         }
                       });
                 } else {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Your session is expired.'),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                builder: (context) =>
-                                    const LoginPage(), // Arahkan ke LoginPage
-                              ));
-                            },
-                            child: const Text('Login'))
-                      ],
-                    ),
-                  );
+                  return SessionExp();
                 }
               }
             },
           ),
-          bottomNavigationBar: navBar(),
-          floatingActionButton: msgButton(context),
         ),
       ),
     );
@@ -174,42 +130,31 @@ class _HomePageState extends State<HomePage> {
   Widget homePage(int nrp) {
     return Container(
         margin: const EdgeInsets.only(top: 25),
-        child: FutureBuilder(
-            future: Future.wait([loadClass]),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error ${snapshot.error}'));
-              } else {
-                return Column(
-                  children: [
-                    // show banner -----
-                    bannerHandler(context, nrp),
-                    const SizedBox(height: 20),
-                    // Container housing today class and app launcher -----
-                    Container(
-                      width: MediaQuery.of(context).size.width - 35,
-                      height: MediaQuery.of(context).size.height - 325,
-                      decoration: cardsContainer.copyWith(
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                      ),
-                      child: Container(
-                          margin: const EdgeInsets.only(
-                              top: 20, left: 20, right: 20),
-                          child: Column(
-                            children: [
-                              todayClass(context),
-                              // homeCarousel(context),
-                              const SizedBox(height: 5),
-                              appShelf(context, nrp),
-                            ],
-                          )),
-                    )
-                  ],
-                );
-              }
-            }));
+        child: Column(
+          children: [
+            // show banner -----
+            bannerHandler(context, nrp),
+            const SizedBox(height: 20),
+            // Container housing today class and app launcher -----
+            Container(
+              width: MediaQuery.of(context).size.width - 35,
+              height: MediaQuery.of(context).size.height - 325,
+              decoration: cardsContainer.copyWith(
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+              child: Container(
+                  margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  child: Column(
+                    children: [
+                      todayClass(context),
+                      // homeCarousel(context),
+                      const SizedBox(height: 5),
+                      appShelf(context, nrp),
+                    ],
+                  )),
+            )
+          ],
+        ));
   }
 
   // -------------- bottom navbar handler  --------------

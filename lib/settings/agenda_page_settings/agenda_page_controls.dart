@@ -3,36 +3,22 @@ import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/style.dart';
 
 // -------------- agenda page skeleton  --------------
-Widget showAgenda(context, data) {
+Widget showAgenda(context) {
   return Expanded(
-    child: FutureBuilder<void>(
-      future: data,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return GridView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: dataAgenda.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: (3 / 3.7),
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              crossAxisCount: 2,
-            ),
-            itemBuilder: ((BuildContext context, index) {
-              final data = dataAgenda[(index + 1).toString()];
-              return agendaList(context, data);
-            }),
-          );
-        }
-      },
+      child: GridView.builder(
+    padding: EdgeInsets.zero,
+    itemCount: agendaData.length,
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      childAspectRatio: (3 / 3.7),
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      crossAxisCount: 2,
     ),
-  );
+    itemBuilder: ((BuildContext context, index) {
+      final data = agendaData[(index)];
+      return agendaList(context, data);
+    }),
+  ));
 }
 
 // -------------- agenda list  --------------
@@ -48,6 +34,7 @@ agendaList(context, data) {
         dialogBox(context, data);
       },
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
@@ -57,37 +44,30 @@ agendaList(context, data) {
             ),
           ),
           const SizedBox(height: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
-                  decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).navigationBarTheme.indicatorColor,
-                      borderRadius: BorderRadius.circular(6)),
-                  child: Text(
-                    data['date'],
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 9),
-                  )),
-              const SizedBox(height: 2),
-              Text(data['title'],
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontSize: 14),
-                  overflow: TextOverflow.ellipsis),
-            ],
-          ),
+          Container(
+              padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).navigationBarTheme.indicatorColor,
+                  borderRadius: BorderRadius.circular(6)),
+              child: Text(
+                data['date'],
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontSize: 9),
+              )),
+          const SizedBox(height: 2),
+          Text(data['title'],
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: 14),
+              overflow: TextOverflow.ellipsis),
           const Spacer(),
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 5, bottom: 5),
+              padding: const EdgeInsets.only(right: 1, bottom: 3),
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(

@@ -5,7 +5,6 @@ import 'package:myits_portal/pages/home/agenda_page.dart';
 import 'package:myits_portal/pages/home/announcement_page.dart';
 import 'package:myits_portal/pages/login/login_page.dart';
 import 'package:myits_portal/settings/home_page_settings/home_page_controls.dart';
-import 'package:dio/dio.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,33 +17,78 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
-  final dio = Dio();
-  List<dynamic> appData = [];
   late Future<void> loadClass;
-  late Future<void> loadApp;
-  late Future<void> loadBanner;
-  late Future<void> loadMhs;
 
-  Future<void> loadAppData() async {
-    final response = await dio.get(
-        'https://65308dd96c756603295ec185.mockapi.io/myits_mobile/data_class');
-    if (response.statusCode == 200) {
+  Future<void> getBannerData() async {
+    final bannerResponse = await dio.get(
+        bannerURL);
+    if (bannerResponse.statusCode == 200) {
       setState(() {
-        appData = response.data;
+        bannerData = bannerResponse.data;
       });
     } else {
-      print('Gagal mengambil data dari API');
+      debugPrint('Gagal mengambil data dari API');
+    }
+  }
+
+  Future<void> getAppData() async {
+    final appResponse = await dio.get(
+        appURL);
+    if (appResponse.statusCode == 200) {
+      setState(() {
+        appData = appResponse.data;
+      });
+    } else {
+      debugPrint('Gagal mengambil data dari API');
+    }
+  }
+
+  Future<void> getMhsData() async {
+    final mhsResponse = await dio.get(
+        mhsURL);
+    if (mhsResponse.statusCode == 200) {
+      setState(() {
+        mhsData = mhsResponse.data;
+      });
+    } else {
+      debugPrint('Gagal mengambil data dari API');
+    }
+  }
+
+  Future<void> getAnnouncementData() async {
+    final announcementResponse = await dio.get(
+        announcementURL);
+    if (announcementResponse.statusCode == 200) {
+      setState(() {
+        announcementData = announcementResponse.data;
+      });
+    } else {
+      debugPrint('Gagal mengambil data dari API');
+    }
+  }
+
+  Future<void> getAgendaData() async {
+    final agendaResponse = await dio.get(
+        agendaURL);
+    if (agendaResponse.statusCode == 200) {
+      setState(() {
+        agendaData = agendaResponse.data;
+      });
+    } else {
+      debugPrint('Gagal mengambil data dari API');
     }
   }
 
   @override
   void initState() {
     super.initState();
-    loadAppData();
     loadClass = loadDataClass();
-    loadApp = loadDataApp();
-    loadBanner = loadDataBanner();
-    loadMhs = loadDataMhs();
+    // loadBanner = loadDataBanner();
+    getBannerData();
+    getAppData();
+    getMhsData();
+    getAnnouncementData();
+    getAgendaData();
   }
 
   @override
@@ -128,11 +172,10 @@ class _HomePageState extends State<HomePage> {
 
   // -------------- home screen  --------------
   Widget homePage(int nrp) {
-    // final isFav = Provider.of<TappedState>(context);
     return Container(
         margin: const EdgeInsets.only(top: 25),
         child: FutureBuilder(
-            future: Future.wait([loadClass, loadApp, loadBanner, loadMhs]),
+            future: Future.wait([loadClass]),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -157,8 +200,9 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             children: [
                               todayClass(context),
+                              // homeCarousel(context),
                               const SizedBox(height: 5),
-                              appLauncher(context, nrp),
+                              appShelf(context, nrp),
                             ],
                           )),
                     )

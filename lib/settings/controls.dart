@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:myits_portal/pages/chat_dptsi_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -5,21 +6,27 @@ import 'package:myits_portal/settings/style.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-// -------------- load json data  --------------
-// var dataStud = dataMhs;
-Map<String, dynamic> dataAnnounce = {};
-Map<String, dynamic> dataClass = {};
-Map<String, dynamic> dataApplication = {};
-Map<String, dynamic> dataAgenda = {};
-Map<String, dynamic> dataMhs = {};
-List<String> dataBanner = [];
+final dio = Dio();
 
-Future<void> loadDataAnnounce() async {
-  // await Future.delayed(const Duration(seconds: 1)); //simulate loading
-  final String jsonData =
-      await rootBundle.loadString('assets/data/data_announcement.json');
-  dataAnnounce = json.decode(jsonData);
-}
+// -------------- load json data  --------------
+String bannerURL =
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFSVgMHQbDkrkoyJ5m.json';
+String appURL =
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFLTa_HU65ZaKrjjvr.json';
+String mhsURL =
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhUGJMvu4UZGRNXOBv6.json';
+String announcementURL =
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFSDOEdHNNEqf5hUyA.json';
+String agendaURL =
+    'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhFKvjMi1HWCfaFQzGe.json';
+
+Map<String, dynamic> dataClass = {};
+
+List<dynamic> bannerData = [];
+List<dynamic> appData = [];
+Map<String, dynamic> mhsData = {};
+List<dynamic> announcementData = [];
+List<dynamic> agendaData = [];
 
 Future<void> loadDataClass() async {
   // await Future.delayed(const Duration(seconds: 1)); //simulate loading
@@ -28,47 +35,14 @@ Future<void> loadDataClass() async {
   dataClass = json.decode(jsonData);
 }
 
-Future<void> loadDataApp() async {
-  // await Future.delayed(const Duration(seconds: 1)); //simulate loading
-  final String jsonData =
-      await rootBundle.loadString('assets/data/data_app.json');
-  dataApplication = json.decode(jsonData);
-}
-
-Future<void> loadDataAgenda() async {
-  // await Future.delayed(const Duration(seconds: 1)); //simulate loading
-  final String jsonData =
-      await rootBundle.loadString('assets/data/data_agenda.json');
-  dataAgenda = json.decode(jsonData);
-}
-
-Future<void> loadDataMhs() async {
-  // await Future.delayed(const Duration(seconds: 1)); //simulate loading
-  final String jsonData =
-      await rootBundle.loadString('assets/data/data_mhs.json');
-  dataMhs = json.decode(jsonData);
-}
-
-Future<void> loadDataBanner() async {
-  final String jsonData =
-      await rootBundle.loadString('assets/data/data_banner.json');
-  final Map<String, dynamic> jsonMap = json.decode(jsonData);
-  final List<dynamic> images = jsonMap['images'];
-  dataBanner = List<String>.from(images);
-}
-
 // -------------- request data from student --------------
 dynamic getStudData(request, nrp) {
   dynamic reqData;
-  dataMhs.forEach((key, value) {
-    // print(key);
+  mhsData.forEach((key, value) {
     if (key == nrp.toString()) {
-      // print(key);
-      // print(value[request]);
       reqData = value[request];
     }
   });
-  // print(reqData);
   return reqData;
 }
 

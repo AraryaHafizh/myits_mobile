@@ -3,30 +3,16 @@ import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/style.dart';
 
 // -------------- announcement page skeleton  --------------
-Widget showAnnouncement(context, data) {
+Widget showAnnouncement(context) {
   return Expanded(
-    child: FutureBuilder<void>(
-      future: data,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: dataAnnounce.length,
-            itemBuilder: ((BuildContext context, index) {
-              final data = dataAnnounce[(index + 1).toString()];
-              return announcementList(context, data);
-            }),
-          );
-        }
-      },
-    ),
-  );
+      child: ListView.builder(
+    padding: EdgeInsets.zero,
+    itemCount: announcementData.length,
+    itemBuilder: ((BuildContext context, index) {
+      final data = announcementData[(index)];
+      return announcementList(context, data);
+    }),
+  ));
 }
 
 // -------------- announcement list  --------------

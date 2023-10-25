@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/announcement_page_settings/announcement_page_controls.dart';
-import 'package:myits_portal/settings/controls.dart';
-import 'package:myits_portal/settings/style.dart';
 
 class Announcement extends StatefulWidget {
   const Announcement({super.key});
@@ -11,14 +9,6 @@ class Announcement extends StatefulWidget {
 }
 
 class _AnnouncementState extends State<Announcement> {
-  late Future<void> loadData;
-
-  @override
-  void initState() {
-    super.initState();
-    loadData = loadDataAnnounce();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +31,7 @@ class _AnnouncementState extends State<Announcement> {
               ),
             ),
             const SizedBox(height: 20),
-            showAnnouncement(context, loadData),
+            showAnnouncement(context),
           ],
         ),
       ),

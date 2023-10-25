@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "182633516681",
+    "firebase_url": "https://myits-mobile-default-rtdb.firebaseio.com",
+    "project_id": "myits-mobile",
+    "storage_bucket": "myits-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182633516681:android:ddce32406b9a7ea05d0058",
+        "android_client_info": {
+          "package_name": "com.example.myits_portal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTFpq7fZ44m6NTZZCwukFfMZWHThyYX7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

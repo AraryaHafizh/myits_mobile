@@ -16,12 +16,22 @@ class _LoginPageState extends State<LoginPage> {
   bool _passwordVisible = true;
   final TextEditingController _nrpInput = TextEditingController();
   final TextEditingController _passwordInput = TextEditingController();
-  late Future<void> loadMhs;
+
+  Future<void> getMhsData() async {
+    final mhsResponse = await dio.get(mhsURL);
+    if (mhsResponse.statusCode == 200) {
+      setState(() {
+        mhsData = mhsResponse.data;
+      });
+    } else {
+      debugPrint('Gagal mengambil data dari API');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    loadMhs = loadDataMhs();
+    getMhsData();
   }
 
   Future<void> _login() async {
@@ -45,44 +55,34 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: itsBlueStatic,
       body: Center(
-        child: FutureBuilder(
-            future: Future.wait([loadMhs]),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error ${snapshot.error}'));
-              } else {
-                return SizedBox(
-                  width: 510,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 45),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/its.png',
-                          width: 160,
-                          height: 160,
-                        ),
-                        const SizedBox(
-                          height: 22,
-                        ),
-                        nrpField(),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        passwordField(),
-                        options(),
-                        loginButton(),
-                        const SizedBox(height: 55),
-                        credit(false, context)
-                      ],
-                    ),
-                  ),
-                );
-              }
-            }),
+        child: SizedBox(
+          width: 510,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 45),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/its.png',
+                  width: 160,
+                  height: 160,
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+                nrpField(),
+                const SizedBox(
+                  height: 15,
+                ),
+                passwordField(),
+                options(),
+                loginButton(),
+                const SizedBox(height: 55),
+                credit(false, context)
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -154,11 +154,9 @@ class _LoginPageState extends State<LoginPage> {
     var nrp = int.tryParse(_nrpInput.text);
     String password = _passwordInput.text;
     bool isLoggedIn = false;
-    dataMhs.forEach((key, value) {
-      if (key == nrp.toString() && value['password'] == password.toString()) {
-        print('true');
-        print(key);
-        print(value);
+    mhsData.forEach((key, value) {
+      if (key == nrp.toString() && value['password'] == password) {
+        print('yes');
         isLoggedIn = true;
       }
     });

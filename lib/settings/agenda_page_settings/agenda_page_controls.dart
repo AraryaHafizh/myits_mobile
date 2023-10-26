@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 
 // -------------- agenda page skeleton  --------------
 Widget showAgenda(context) {
-  final agendaProvider = Provider.of<AgendaDataProvider>(context, listen: false);
+  final agendaProvider =
+      Provider.of<AgendaDataProvider>(context, listen: false);
   return Expanded(
       child: GridView.builder(
     padding: EdgeInsets.zero,
@@ -61,7 +62,7 @@ agendaList(context, data) {
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
-                    .copyWith(fontSize: 9),
+                    .copyWith(fontSize: 9, fontWeight: FontWeight.w900),
               )),
           const SizedBox(height: 2),
           Text(data['title'],
@@ -130,7 +131,7 @@ dialogBox(context, data) {
                     data['desc'],
                     style: Theme.of(context)
                         .textTheme
-                        .bodySmall!
+                        .titleLarge!
                         .copyWith(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                   Row(

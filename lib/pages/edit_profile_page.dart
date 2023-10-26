@@ -94,7 +94,7 @@ class _EditProfileState extends State<EditProfile> {
                       alignment: Alignment.bottomRight,
                       child: IconButton.filled(
                           onPressed: () {
-                            alertDialog();
+                            wipAlertDialog(context);
                           },
                           icon: Icon(Icons.edit, color: itsBlue),
                           style: TextButton.styleFrom(backgroundColor: white))),
@@ -142,10 +142,10 @@ class _EditProfileState extends State<EditProfile> {
     return ElevatedButton(
       onPressed: () {
         pushNewDat(usernameInput.text, phoneInput.text, passwordInput.text);
-        print('profile saved!');
+        debugPrint('profile saved!');
       },
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(100, 45),
+        fixedSize: const Size(100, 45),
         backgroundColor: itsBlue,
         elevation: 5,
         // padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 45),
@@ -180,45 +180,14 @@ class _EditProfileState extends State<EditProfile> {
 
     if (updatedData.isNotEmpty) {
       databaseRef.update(updatedData).then((_) {
-        print('Profile saved!');
+        debugPrint('Profile saved!');
       }).onError((error, stackTrace) {
-        print('Error: $error');
+        debugPrint('Error: $error');
       });
     } else {
-      print('Tidak ada data untuk diperbarui.');
+      debugPrint('Tidak ada data untuk diperbarui.');
     }
   }
-
-  void alertDialog() {
-    showDialog(
-        barrierDismissible: true,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-              'Work In Progress',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(fontSize: 23),
-            ),
-            content: Text(
-                'We\'re currently working on this feature. Please hang tight and stay tuned for the exciting updates!.',
-                style: Theme.of(context).textTheme.bodySmall),
-            actions: [
-              // TextButton(
-              //     onPressed: () {
-              //       Navigator.pop(context);
-              //       Navigator.pop(context);
-              //     },
-              //     child: Text('Go Back')),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Ok'))
-            ],
-          );
-        });
-  }
 }
+
+

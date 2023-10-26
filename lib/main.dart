@@ -1,10 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:myits_portal/pages/home/home_page.dart';
+import 'package:myits_portal/pages/home/home.dart';
 import 'package:myits_portal/pages/login/login_page.dart';
 import 'package:myits_portal/settings/home_page_settings/fav_app_controls.dart';
-import 'package:myits_portal/settings/language_controls.dart';
-import 'package:myits_portal/settings/notification_controls.dart';
 import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:myits_portal/settings/theme_controls.dart';
@@ -30,8 +28,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AnnounceDataProvider()),
         ChangeNotifierProvider(create: (_) => AgendaDataProvider()),
         ChangeNotifierProvider(create: (_) => BannerDataProvider()),
-        ChangeNotifierProvider(create: (_) => LanguageSelector()),
-        ChangeNotifierProvider(create: (_) => NotificationSelector()),
         ChangeNotifierProvider(create: (_) => FavAppHandler()),
       ],
       child: MyApp(isLogin: isLogin),
@@ -56,12 +52,12 @@ class MyApp extends StatelessWidget {
         '/': (context) => AnimatedSplashScreen(
               splash: Image.asset('assets/images/its.png'),
               backgroundColor: itsBlueStatic,
-              nextScreen: isLogin ? HomePage() : LoginPage(),
+              nextScreen: isLogin ? Home() : LoginPage(),
               splashTransition: SplashTransition.fadeTransition,
               duration: 2000,
             ),
         '/login': (context) => const LoginPage(),
-        '/homepage': (context) => const HomePage(),
+        '/home': (context) => const Home(),
       },
     );
   }

@@ -29,7 +29,8 @@ appBarHandler(context) {
 
 // -------------- banner handler --------------
 Widget bannerHandler(context, int nrp) {
-  final bannerProvider = Provider.of<BannerDataProvider>(context, listen: false);
+  final bannerProvider =
+      Provider.of<BannerDataProvider>(context, listen: false);
   return Center(
     child: SizedBox(
       // width: 375,
@@ -287,7 +288,7 @@ Widget reminder(context) {
 
 // -------------- app shelf --------------
 Widget appShelf(context, int nrp) {
-  final mhsHandler = Provider.of<MhsDataProvider>(context);
+  final mhsHandler = Provider.of<MhsDataProvider>(context, listen: false);
   return Column(
     children: [
       Padding(
@@ -324,7 +325,8 @@ Widget appShelf(context, int nrp) {
                 if (index == mhsHandler.getFavApp('favApp', nrp).length) {
                   return openAll(context);
                 } else {
-                  return renderApp(context, mhsHandler.getFavApp('favApp', nrp)[index]);
+                  return renderApp(
+                      context, mhsHandler.getFavApp('favApp', nrp)[index]);
                 }
               },
             ),

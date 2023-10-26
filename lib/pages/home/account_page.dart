@@ -1,8 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/pages/edit_profile_page.dart';
 import 'package:myits_portal/settings/language_controls.dart';
 import 'package:myits_portal/settings/notification_controls.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,18 +20,9 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  @override
-  void initState() {
-    super.initState();
-    final languageSelector =
-        Provider.of<LanguageSelector>(context, listen: false);
-    // final themeSelector = Provider.of<ThemeSelector>(context, listen: false);
-    final notificationSelector =
-        Provider.of<NotificationSelector>(context, listen: false);
-    // themeSelector.initTheme();
-    languageSelector.initLanguage();
-    notificationSelector.initNotifier();
-  }
+  bool languageVal = true;
+  bool notifVal = true;
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +32,32 @@ class _AccountPageState extends State<AccountPage> {
     );
   }
 
-  // -------------- account page handler  --------------
+  @override
+  void initState() {
+    super.initState();
+    refetch();
+  }
+
+  void refetch() {
+    final databaseRef =
+        FirebaseDatabase.instance.ref().child('data/-NhZvIHt6AKiTb-zQDnn');
+    databaseRef.onValue.listen((event) {
+      loadData();
+    });
+  }
+
+  Future<void> loadData() async {
+    setState(() {
+      isLoading = false;
+    });
+
+    final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
+    await mhsProvider.fetchDataFromAPI();
+
+    setState(() {
+      isLoading = true;
+    });
+  }
 
   Widget bodyPage() {
     String username = getStudData(context, 'nama', widget.nrp);
@@ -53,7 +71,7 @@ class _AccountPageState extends State<AccountPage> {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   height: 135,
                   decoration: BoxDecoration(
                       color:
@@ -186,7 +204,6 @@ class _AccountPageState extends State<AccountPage> {
   // -------------- language mode  --------------
 
   Widget languageMode() {
-    final languageSelector = Provider.of<LanguageSelector>(context);
     return ListTile(
         leading: Ink(
           height: 35,
@@ -206,13 +223,18 @@ class _AccountPageState extends State<AccountPage> {
                 .titleLarge!
                 .copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
         trailing: Switch(
-          value: languageSelector.isEnglish,
+          value: languageVal,
           activeColor: Theme.of(context).colorScheme.primary,
           inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
           onChanged: (bool value) {
             setState(() {
-              languageSelector.isEnglish = value;
-              languageSelector.setLanguagePref(value);
+              languageVal = false;
+            });
+            Future.delayed(const Duration(milliseconds: 300), () {
+              wipAlertDialog(context);
+              setState(() {
+                languageVal = true;
+              });
             });
           },
           activeThumbImage: const AssetImage('assets/icons/en.png'),
@@ -223,7 +245,6 @@ class _AccountPageState extends State<AccountPage> {
   // -------------- notification --------------
 
   Widget notification() {
-    final notificationSelector = Provider.of<NotificationSelector>(context);
     return ListTile(
         leading: Ink(
           height: 35,
@@ -243,13 +264,18 @@ class _AccountPageState extends State<AccountPage> {
                 .titleLarge!
                 .copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
         trailing: Switch(
-          value: notificationSelector.isNotified,
+          value: notifVal,
           activeColor: Theme.of(context).colorScheme.primary,
           inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
           onChanged: (bool value) {
             setState(() {
-              notificationSelector.isNotified = value;
-              notificationSelector.setNotifierPref(value);
+              notifVal = false;
+            });
+            Future.delayed(const Duration(milliseconds: 300), () {
+              wipAlertDialog(context);
+              setState(() {
+                notifVal = true;
+              });
             });
           },
           thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
@@ -313,23 +339,20 @@ class _AccountPageState extends State<AccountPage> {
         context: context,
         builder: ((context) => AlertDialog(
               title: Text('Are you soure you want to Log out from myITS SSO?',
-                  style: jakarta.copyWith(fontSize: 16)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 17, fontWeight: FontWeight.w600)),
               actions: [
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
-                  child: Text(
-                    'Cancel',
-                    style: jakarta.copyWith(fontSize: 14, color: itsBlue),
-                  ),
+                  child: const Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.pop(context, true),
-                  child: Text(
-                    'Ok',
-                    style: jakarta.copyWith(fontSize: 14, color: itsBlue),
-                  ),
+                  child: const Text('Ok'),
                 ),
               ],
             )));

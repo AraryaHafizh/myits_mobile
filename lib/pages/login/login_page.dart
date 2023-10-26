@@ -19,21 +19,9 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _nrpInput = TextEditingController();
   final TextEditingController _passwordInput = TextEditingController();
 
-  // Future<void> getMhsData() async {
-  //   final mhsResponse = await dio.get(mhsURL);
-  //   if (mhsResponse.statusCode == 200) {
-  //     setState(() {
-  //       mhsData = mhsResponse.data;
-  //     });
-  //   } else {
-  //     debugPrint('Gagal mengambil data dari API');
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
-    // Panggil fetchDataFromAPI dari provider untuk mengambil data
     final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
     mhsProvider.fetchDataFromAPI();
   }
@@ -44,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     await prefs.setInt('nrp', int.parse(_nrpInput.text));
     // int? nrp = await prefs.getInt('nrp');
     // print(nrp);
-    Navigator.pushReplacementNamed(context, '/homepage');
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
@@ -161,17 +149,17 @@ class _LoginPageState extends State<LoginPage> {
     mhsProvider.data.forEach((key, value) {
       // print(key);
       if (key == nrp.toString() && value['password'] == password) {
-        print('yes');
+        debugPrint('yes');
         isLoggedIn = true;
       }
     });
     if (isLoggedIn) {
       _login();
-      print('login berhasil');
+      debugPrint('login berhasil');
       return;
     } else {
       errorDialog();
-      print('login tidak berhasil');
+      debugPrint('login tidak berhasil');
     }
   }
 
@@ -208,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           debugPrint('tertekan');
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ResetPassPage()));
+              MaterialPageRoute(builder: (context) => const ResetPassPage()));
         },
         child: Text('Forged Password?',
             style: jakarta.copyWith(fontSize: 11, color: whiteStatic)),

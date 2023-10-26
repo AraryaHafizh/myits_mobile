@@ -14,10 +14,9 @@ class _LoginPageState extends State<SessionExp> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: itsBlue,
-        
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 45),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -35,7 +34,14 @@ class _LoginPageState extends State<SessionExp> {
                         fontSize: 28,
                         color: itsYellowStatic,
                         fontWeight: FontWeight.w800)),
-                const SizedBox(height: 55),
+                const SizedBox(height: 10),
+                Text(
+                    'But Don\'t panic, just log back in and pick up where you left off..',
+                    style: jakarta.copyWith(
+                        fontSize: 14,
+                        color: itsYellowStatic,
+                        fontWeight: FontWeight.w800)),
+                const SizedBox(height: 25),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(

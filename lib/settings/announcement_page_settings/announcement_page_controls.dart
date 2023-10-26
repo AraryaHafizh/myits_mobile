@@ -104,7 +104,7 @@ dialogBox(context, data) {
             child: Text(data['subtitle'],
                 style: Theme.of(context)
                     .textTheme
-                    .bodySmall!
+                    .titleLarge!
                     .copyWith(fontWeight: FontWeight.w500, fontSize: 13)),
           ),
           actions: [

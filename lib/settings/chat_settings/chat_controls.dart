@@ -6,7 +6,7 @@ import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
 
 int userNRP = 0;
-const String apiKey = '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';
+const String apiKey = '';
 bool isLoading = false;
 
 class ChatbotHandler extends ChangeNotifier {

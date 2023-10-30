@@ -2,6 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/pages/home/home.dart';
 import 'package:myits_portal/pages/login/login_page.dart';
+import 'package:myits_portal/settings/chat_settings/chat_controls.dart';
 import 'package:myits_portal/settings/home_page_settings/fav_app_controls.dart';
 import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
@@ -29,6 +30,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AgendaDataProvider()),
         ChangeNotifierProvider(create: (_) => BannerDataProvider()),
         ChangeNotifierProvider(create: (_) => FavAppHandler()),
+        ChangeNotifierProvider(create: (_) => ChatbotHandler()),
       ],
       child: MyApp(isLogin: isLogin),
     ),

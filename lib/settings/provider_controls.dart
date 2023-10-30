@@ -6,14 +6,13 @@ class MhsDataProvider with ChangeNotifier {
 
   Map<String, dynamic> get data => mhsData;
 
-  dynamic getFavApp(request, nrp) {
+  dynamic getStudData(request, nrp) {
     dynamic reqData;
     mhsData.forEach((key, value) {
       if (key == nrp.toString()) {
         reqData = value[request];
       }
     });
-    notifyListeners();
     return reqData;
   }
 

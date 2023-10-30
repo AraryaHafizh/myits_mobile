@@ -78,8 +78,7 @@ class _LoginPageState extends State<ResetPassPage> {
   Widget searchButton() {
     return ElevatedButton(
       onPressed: () {
-        // userInputCheck();
-        // debugPrint('test');
+        wipAlertDialog(context);
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(

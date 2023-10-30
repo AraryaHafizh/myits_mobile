@@ -2,8 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/pages/edit_profile_page.dart';
-import 'package:myits_portal/settings/language_controls.dart';
-import 'package:myits_portal/settings/notification_controls.dart';
 import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
@@ -60,8 +58,9 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   Widget bodyPage() {
-    String username = getStudData(context, 'nama', widget.nrp);
-    String jurusan = getStudData(context, 'jurusan', widget.nrp);
+    final mhsHandler = Provider.of<MhsDataProvider>(context, listen: false);
+    String username = mhsHandler.getStudData('nama', widget.nrp);
+    String jurusan = mhsHandler.getStudData('jurusan', widget.nrp);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       child: Column(

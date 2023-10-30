@@ -1,7 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:myits_portal/settings/controls.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   final int nrp;
@@ -25,10 +27,11 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    username = getStudData(context, 'nama', widget.nrp);
-    email = getStudData(context, 'email', widget.nrp);
-    phone = getStudData(context, 'nomor telepon', widget.nrp);
-    password = getStudData(context, 'password', widget.nrp);
+    final mhsHandler = Provider.of<MhsDataProvider>(context, listen: false);
+    username = mhsHandler.getStudData('nama', widget.nrp);
+    email = mhsHandler.getStudData('email', widget.nrp);
+    phone = mhsHandler.getStudData('nomor telepon', widget.nrp);
+    password = mhsHandler.getStudData('password', widget.nrp);
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   alertDialog();
     // });
@@ -105,12 +108,19 @@ class _EditProfileState extends State<EditProfile> {
             Wrap(
               runSpacing: 20,
               children: [
-                fieldMaker(true, username, usernameInput,
+                fieldMaker(
+                    true,
+                    hintInput: username,
+                    usernameInput,
                     hintText: 'Change Name'),
-                fieldMaker(false, email, emailInput, hintText: email),
-                fieldMaker(true, phone, phoneInput, hintText: 'Change Phone'),
-                fieldMaker(true, password, passwordInput,
-                    hintText: 'Change Password'),
+                fieldMaker(
+                    false, hintInput: email, emailInput, hintText: email),
+                fieldMaker(
+                    true,
+                    hintInput: phone,
+                    phoneInput,
+                    hintText: 'Change Phone'),
+                fieldMaker(true, passwordInput, hintText: 'Change Password'),
                 Center(child: saveButton())
               ],
             ),
@@ -120,11 +130,11 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget fieldMaker(isEnable, label, controller, {hintText}) {
+  Widget fieldMaker(isEnable, controller, {hintText, hintInput}) {
     return TextFormField(
       controller: controller,
       onTap: () {
-        controller.text = label;
+        controller.text = hintInput;
       },
       enabled: isEnable,
       decoration: profileSetting.copyWith(
@@ -141,7 +151,8 @@ class _EditProfileState extends State<EditProfile> {
   Widget saveButton() {
     return ElevatedButton(
       onPressed: () {
-        pushNewDat(usernameInput.text, phoneInput.text, passwordInput.text);
+        // pushNewDat(usernameInput.text, phoneInput.text, passwordInput.text);
+        print(encryptPassword(passwordInput.text));
         debugPrint('profile saved!');
       },
       style: ElevatedButton.styleFrom(
@@ -175,7 +186,7 @@ class _EditProfileState extends State<EditProfile> {
     }
 
     if (pass.isNotEmpty) {
-      updatedData['password'] = pass;
+      updatedData['password'] = encryptPassword(pass);
     }
 
     if (updatedData.isNotEmpty) {
@@ -189,5 +200,3 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 }
-
-

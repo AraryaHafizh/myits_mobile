@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
                               AccountPage(nrp: nrp),
                             ][currentPageIndex],
                             bottomNavigationBar: navBar(),
-                            floatingActionButton: msgButton(context),
+                            floatingActionButton: msgButton(context, nrp),
                           );
                         }
                       });

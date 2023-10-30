@@ -54,6 +54,7 @@ Widget bannerHandler(context, int nrp) {
 }
 
 Widget nameBanner(context, int nrp) {
+  final mhsHandler = Provider.of<MhsDataProvider>(context, listen: false);
   return Container(
     decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer,
@@ -73,18 +74,18 @@ Widget nameBanner(context, int nrp) {
                     .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
-              Text(getStudData(context, 'nama', nrp),
+              Text(mhsHandler.getStudData('nama', nrp),
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
-                      .copyWith(fontWeight: FontWeight.w800))
+                      .copyWith(fontWeight: FontWeight.w700))
             ]),
         Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                getStudData(context, 'jurusan', nrp),
+                mhsHandler.getStudData('jurusan', nrp),
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
@@ -94,7 +95,7 @@ Widget nameBanner(context, int nrp) {
                 height: 1,
               ),
               Text(
-                'Semester ${getStudData(context, 'semester', nrp)}',
+                'Semester ${mhsHandler.getStudData('semester', nrp)}',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
@@ -119,14 +120,14 @@ Widget loadBanners(data) {
 }
 
 // -------------- carousel (WIP) --------------
-Widget homeCarousel(context) {
-  return CarouselSlider(
-      items: [todayClass(context), reminder(context)],
-      options: CarouselOptions(
-        viewportFraction: 1,
-        height: 255,
-      ));
-}
+// Widget homeCarousel(context) {
+//   return CarouselSlider(
+//       items: [todayClass(context), reminder(context)],
+//       options: CarouselOptions(
+//         viewportFraction: 1,
+//         height: 255,
+//       ));
+// }
 
 // -------------- class list --------------
 Widget todayClass(context) {
@@ -246,45 +247,45 @@ Widget classList(context, data) {
 }
 
 // -------------- reminder (WIP) --------------
-Widget reminder(context) {
-  return Padding(
-    padding: const EdgeInsets.only(right: 10),
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Text('Reminder',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontWeight: FontWeight.w900, fontSize: 18)),
-            const Spacer(),
-            InkWell(
-                onTap: () {
-                  print('tertekan');
-                },
-                child: Text('See all',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(fontWeight: FontWeight.w900)))
-          ],
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 204,
-          child: ListView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemCount: 1,
-              itemBuilder: (BuildContext context, index) {
-                // return classList(data, context);
-              }),
-        ),
-      ],
-    ),
-  );
-}
+// Widget reminder(context) {
+//   return Padding(
+//     padding: const EdgeInsets.only(right: 10),
+//     child: Column(
+//       children: [
+//         Row(
+//           children: [
+//             Text('Reminder',
+//                 style: Theme.of(context)
+//                     .textTheme
+//                     .bodySmall!
+//                     .copyWith(fontWeight: FontWeight.w900, fontSize: 18)),
+//             const Spacer(),
+//             InkWell(
+//                 onTap: () {
+//                   debugPrint('tertekan');
+//                 },
+//                 child: Text('See all',
+//                     style: Theme.of(context)
+//                         .textTheme
+//                         .bodySmall!
+//                         .copyWith(fontWeight: FontWeight.w900)))
+//           ],
+//         ),
+//         const SizedBox(height: 10),
+//         SizedBox(
+//           height: 204,
+//           child: ListView.builder(
+//               padding: EdgeInsets.zero,
+//               shrinkWrap: true,
+//               itemCount: 1,
+//               itemBuilder: (BuildContext context, index) {
+//                 // return classList(data, context);
+//               }),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 // -------------- app shelf --------------
 Widget appShelf(context, int nrp) {
@@ -320,13 +321,13 @@ Widget appShelf(context, int nrp) {
                 mainAxisSpacing: 5.0,
               ),
               scrollDirection: Axis.horizontal,
-              itemCount: mhsHandler.getFavApp('favApp', nrp).length + 1,
+              itemCount: mhsHandler.getStudData('favApp', nrp).length + 1,
               itemBuilder: (BuildContext context, index) {
-                if (index == mhsHandler.getFavApp('favApp', nrp).length) {
+                if (index == mhsHandler.getStudData('favApp', nrp).length) {
                   return openAll(context);
                 } else {
                   return renderApp(
-                      context, mhsHandler.getFavApp('favApp', nrp)[index]);
+                      context, mhsHandler.getStudData('favApp', nrp)[index]);
                 }
               },
             ),

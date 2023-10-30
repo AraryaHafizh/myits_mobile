@@ -148,8 +148,8 @@ class _LoginPageState extends State<LoginPage> {
 
     mhsProvider.data.forEach((key, value) {
       // print(key);
-      if (key == nrp.toString() && value['password'] == password) {
-        debugPrint('yes');
+      if (key == nrp.toString() &&
+          value['password'] == encryptPassword(password)) {
         isLoggedIn = true;
       }
     });

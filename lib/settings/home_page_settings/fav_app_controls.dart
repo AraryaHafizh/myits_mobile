@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myits_portal/settings/controls.dart';
 import 'package:myits_portal/settings/provider_controls.dart';
 import 'package:myits_portal/settings/style.dart';
 import 'package:provider/provider.dart';
@@ -56,11 +55,12 @@ Widget openEditFavApp(BuildContext context, nrp) {
 // menampilkan bottomsheet
 Future botSheetEdit(context, nrp) {
   final favAppHandler = Provider.of<FavAppHandler>(context, listen: false);
+  final mhsHandler = Provider.of<MhsDataProvider>(context, listen: false);
   final appHandler = Provider.of<AppDataProvider>(context, listen: false);
   double screenHeight = MediaQuery.of(context).size.height;
   double desiredHeight = 0.83 * screenHeight;
   userNRP = nrp;
-  favAppHandler.copyFav = [...getStudData(context, 'favApp', nrp)];
+  favAppHandler.copyFav = [...mhsHandler.getStudData('favApp', nrp)];
   // favAppHandler.copyFav = [...getFavData(context, nrp)];
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).colorScheme.background,

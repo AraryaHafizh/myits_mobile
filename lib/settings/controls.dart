@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/style.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 final dio = Dio();
 
@@ -23,16 +25,6 @@ String classScheduleURL =
     'https://myits-mobile-default-rtdb.firebaseio.com/data/-NhZvVJVRDCmelUcNtUJ.json';
 
 // -------------- request data from student --------------
-dynamic getStudData(context, request, nrp) {
-  final mhsProvider = Provider.of<MhsDataProvider>(context, listen: false);
-  dynamic reqData;
-  mhsProvider.data.forEach((key, value) {
-    if (key == nrp.toString()) {
-      reqData = value[request];
-    }
-  });
-  return reqData;
-}
 
 // -------------- launch URL --------------
 launchURL(data) async {
@@ -43,14 +35,14 @@ launchURL(data) async {
 }
 
 // -------------- message button  --------------
-msgButton(context) {
+msgButton(context, nrp) {
   return FloatingActionButton(
     backgroundColor: itsBlue,
     onPressed: () {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const OpenChat(),
+          builder: (context) => OpenChat(nrp: nrp),
         ),
       );
     },
@@ -98,6 +90,13 @@ void wipAlertDialog(context) {
       });
 }
 
+// -------------- encrypt password --------------
+String encryptPassword(String password) {
+  final bytes = utf8.encode(password);
+  final hash = sha256.convert(bytes);
+  return hash.toString();
+}
+
 // -------------- credit --------------
 Widget credit(bool isLight, context) {
   return Center(
@@ -116,19 +115,20 @@ Widget credit(bool isLight, context) {
               ? Theme.of(context)
                   .textTheme
                   .titleLarge!
-                  .copyWith(fontWeight: FontWeight.w100, fontSize: 8)
+                  .copyWith(fontWeight: FontWeight.w400, fontSize: 8)
               : jakarta.copyWith(
                   fontWeight: FontWeight.w100,
                   fontSize: 8,
                   color: Colors.white),
         ),
+        const SizedBox(height: 3),
         Text(
-          'V 0.39',
+          'V 0.86',
           style: isLight
               ? Theme.of(context)
                   .textTheme
                   .titleLarge!
-                  .copyWith(fontWeight: FontWeight.w100, fontSize: 8)
+                  .copyWith(fontWeight: FontWeight.w400, fontSize: 8)
               : jakarta.copyWith(
                   fontWeight: FontWeight.w100,
                   fontSize: 8,

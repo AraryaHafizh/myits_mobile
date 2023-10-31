@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:myits_portal/pages/chat_dptsi_page.dart';
-import 'package:myits_portal/settings/provider_controls.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/style.dart';

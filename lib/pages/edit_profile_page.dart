@@ -151,7 +151,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget saveButton() {
     return ElevatedButton(
       onPressed: () {
-        // pushNewDat(usernameInput.text, phoneInput.text, passwordInput.text);
+        pushNewDat(usernameInput.text, phoneInput.text, passwordInput.text);
         print(encryptPassword(passwordInput.text));
         debugPrint('profile saved!');
       },

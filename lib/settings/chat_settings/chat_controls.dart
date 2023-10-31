@@ -1,3 +1,4 @@
+import 'package:dart_ping/dart_ping.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:myits_portal/settings/controls.dart';
@@ -61,6 +62,18 @@ class ChatbotHandler extends ChangeNotifier {
   }
 }
 
+Future<bool> checkGPTStatus() async {
+  final ping = Ping('api.openai.com', count: 2);
+  final result = await ping.stream.first;
+  if (result.response != null) {
+    print('truu');
+    return true;
+  } else {
+    print('false');
+    return false;
+  }
+}
+
 Future<void> submit(context, question, nrp) async {
   final mhsHandler = Provider.of<MhsDataProvider>(context, listen: false);
   String username = mhsHandler.getStudData('nama', nrp);
@@ -80,7 +93,7 @@ Future<void> submit(context, question, nrp) async {
                 {
                   'role': 'system',
                   'content':
-                      'Anda adalah seorang customer service pada universitas ITS Surabaya. tolong coba jawab pertanyaan meskipun jawaban itu mungkin outdated, saya ingin anda menjawb dengan susunan: pembukaan-isi-penutup. untuk pembukaan berikan sapaan kepada mahasiswa dengan nama $username. untuk penutup tolong berikan \'Kampus ITS Sukolilo - Surabaya\nEmail: humas@its.ac.id\nPhone: 031-5994251-54, 5947274, 5945472\nFax: 031-5923465, 5947845.\'. Gunakan data berikut sebagai referensi tambahan: ${agendaProvider.data} dan ${announcementProvider.data}. Jika user bertanya terkait agenda sebutkan title, desc, dan date saja. Jika user bertanya terkait announcement sebutkan title dan subtitle saja.'
+                      'Anda adalah seorang customer service pada universitas ITS Surabaya. tolong coba jawab pertanyaan meskipun jawaban itu mungkin outdated, saya ingin anda menjawb dengan susunan: pembukaan-isi-penutup. untuk pembukaan berikan sapaan kepada mahasiswa dengan nama $username. untuk penutup tolong berikan \'Kampus ITS Sukolilo - Surabaya\nEmail: humas@its.ac.id\nPhone: 031-5994251-54, 5947274, 5945472\nFax: 031-5923465, 5947845.\'. Gunakan data berikut sebagai referensi tambahan: ${agendaProvider.data} dan ${announcementProvider.data}. Jika user bertanya terkait agenda sebutkan title, desc, dan date saja. Jika user bertanya terkait announcement sebutkan title dan subtitle saja. Jika user bertanya mengenai informasi seputar ITS jangan lupa diakhir jawaban berikan contact center dengan data berikut'
                 },
                 {'role': 'user', 'content': chatbot.input},
               ],

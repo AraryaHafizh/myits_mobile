@@ -8,7 +8,7 @@ import 'package:myits_portal/ui/home/chat_dptsi_page.dart';
 import 'package:provider/provider.dart';
 
 int userNRP = 0;
-const String apiKey = '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';
+const String apiKey = '';
 bool waitGPTAnswer = false;
 
 String contactCenter =

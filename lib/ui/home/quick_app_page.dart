@@ -105,8 +105,6 @@ Future showEditAppUI(context, nrp) {
           ),
         );
       }));
-
-  // .whenComplete(() => colorChangingState.clearFav());
 }
 
 Widget appListBuilder(data, idx, context) {

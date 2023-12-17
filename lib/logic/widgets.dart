@@ -48,19 +48,25 @@ void wipAlertDialog(context) {
                 .titleLarge!
                 .copyWith(fontSize: 23, fontWeight: FontWeight.w700),
           ),
-          content: Text(
-              'We\'re currently working on this feature. Please hang tight and stay tuned for the exciting updates!.',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(fontWeight: FontWeight.w500, fontSize: 13)),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Ok'))
-          ],
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                  'We\'re currently working on this feature. Please hang tight and stay tuned for the exciting updates!.',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 13)),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Ok')),
+              )
+            ],
+          ),
         );
       });
 }

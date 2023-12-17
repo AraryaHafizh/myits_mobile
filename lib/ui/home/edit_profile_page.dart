@@ -138,9 +138,6 @@ class _EditProfileState extends State<EditProfile> {
         labelText: hintText,
         labelStyle:
             Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16),
-        // hintText: hintText,
-        // hintStyle:
-        //     Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
       ),
     );
   }
@@ -154,10 +151,9 @@ class _EditProfileState extends State<EditProfile> {
         fixedSize: const Size(100, 45),
         backgroundColor: itsBlue,
         elevation: 5,
-        // padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 45),
         shape: RoundedRectangleBorder(
           borderRadius:
-              BorderRadius.circular(15), // Atur radius sesuai kebutuhan
+              BorderRadius.circular(15),
         ),
       ),
       child: Text('Save',
@@ -187,10 +183,11 @@ class _EditProfileState extends State<EditProfile> {
     if (updatedData.isNotEmpty) {
       databaseRef.update(updatedData).then((_) {
       }).onError((error, stackTrace) {
-        throw ('error: ${error}');
+        throw ('error: $error');
       });
-    } else {
-      debugPrint('Tidak ada data untuk diperbarui.');
-    }
+    } 
+    // else {
+    //   debugPrint('Tidak ada data untuk diperbarui.');
+    // }
   }
 }

@@ -18,6 +18,8 @@ class _LoginPageState extends State<LoginPage> {
   bool passwordVisible = true;
   final TextEditingController nrpInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
+  final FocusNode nrpFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -30,6 +32,8 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     nrpInput.dispose();
     passwordInput.dispose();
+    nrpFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -75,7 +79,11 @@ class _LoginPageState extends State<LoginPage> {
       margin: const EdgeInsets.only(bottom: 15),
       child: TextField(
         controller: nrpInput,
+        focusNode: nrpFocusNode,
         cursorColor: itsYellowStatic,
+        onEditingComplete: () {
+          FocusScope.of(context).requestFocus(passwordFocusNode);
+        },
         style: jakarta.copyWith(fontSize: 14, color: whiteStatic),
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
@@ -89,27 +97,29 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget passwordField() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      child: TextFormField(
-        cursorColor: itsYellowStatic,
-        controller: passwordInput,
-        obscureText: passwordVisible,
-        style: jakarta.copyWith(fontSize: 14, color: whiteStatic),
-        decoration: loginTheme.copyWith(
-            labelText: 'Password',
-            labelStyle: jakarta.copyWith(fontSize: 14, color: whiteStatic),
-            suffixIcon: IconButton(
-                icon: Icon(
-                  passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  setState(() {
-                    passwordVisible = !passwordVisible;
-                  });
-                })),
-      ),
+    return TextFormField(
+      onFieldSubmitted: (value) {
+        userInputCheck(context, nrpInput.text, passwordInput.text);
+      },
+      textInputAction: TextInputAction.send,
+      cursorColor: itsYellowStatic,
+      controller: passwordInput,
+      focusNode: passwordFocusNode,
+      obscureText: passwordVisible,
+      style: jakarta.copyWith(fontSize: 14, color: whiteStatic),
+      decoration: loginTheme.copyWith(
+          labelText: 'Password',
+          labelStyle: jakarta.copyWith(fontSize: 14, color: whiteStatic),
+          suffixIcon: IconButton(
+              icon: Icon(
+                passwordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  passwordVisible = !passwordVisible;
+                });
+              })),
     );
   }
 
@@ -134,19 +144,27 @@ errorDialog(context) {
       context: context,
       builder: ((context) => AlertDialog(
             title: Text('Login Gagal',
-                style: jakarta.copyWith(color: black, fontSize: 20)),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 20)),
             content: SizedBox(
               width: 220,
               height: 37,
               child: Text('Silahkan cek kembali NRP dan Password anda.',
-                  style: jakarta.copyWith(fontSize: 14, color: black)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 14)),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: Text(
                   'OK',
-                  style: jakarta.copyWith(fontSize: 14, color: itsBlue),
+                  style: jakarta.copyWith(
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.primary),
                 ),
               )
             ],

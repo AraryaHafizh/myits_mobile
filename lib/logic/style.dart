@@ -130,25 +130,29 @@ ThemeData lightTheme = ThemeData(
     ));
 
 ThemeData darkTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.dark,
-  colorScheme: ColorScheme.dark(
-    primary: itsBlueDark,
-    outline: black38Dark,
-    onPrimary: black38Dark,
-    onSecondary: blackDark,
-    tertiary: itsLogoDark,
-    background: defaultBGDark,
-    primaryContainer: containerBGdark,
-    onSecondaryContainer: whiteDark,
-    secondaryContainer: containerWhiteDark,
-  ),
-  textTheme: TextTheme(
-    titleLarge: jakarta.copyWith(fontSize: 25, color: blackDark),
-    bodyMedium: jakarta.copyWith(fontSize: 14, color: itsBlueDark),
-    bodySmall: jakarta.copyWith(fontSize: 12, color: black38Dark),
-  ),
-  iconTheme: IconThemeData(color: blackDark),
-  navigationBarTheme: NavigationBarThemeData(indicatorColor: itsBlueShadeDark),
-  inputDecorationTheme: InputDecorationTheme(fillColor: whiteDark),
-);
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.dark(
+      primary: itsBlueDark,
+      outline: black38Dark,
+      onPrimary: black38Dark,
+      onSecondary: blackDark,
+      tertiary: itsLogoDark,
+      background: defaultBGDark,
+      primaryContainer: containerBGdark,
+      onSecondaryContainer: whiteDark,
+      secondaryContainer: containerWhiteDark,
+    ),
+    textTheme: TextTheme(
+      titleLarge: jakarta.copyWith(fontSize: 25, color: blackDark),
+      bodyMedium: jakarta.copyWith(fontSize: 14, color: itsBlueDark),
+      bodySmall: jakarta.copyWith(fontSize: 12, color: black38Dark),
+    ),
+    iconTheme: IconThemeData(color: blackDark),
+    navigationBarTheme:
+        NavigationBarThemeData(indicatorColor: itsBlueShadeDark),
+    inputDecorationTheme: InputDecorationTheme(fillColor: whiteDark),
+    textSelectionTheme: TextSelectionThemeData(
+      selectionColor: itsYellowStatic,
+      selectionHandleColor: itsYellowStatic,
+    ));

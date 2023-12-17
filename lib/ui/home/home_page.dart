@@ -19,7 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     refetchHomePage(context, setState);
-  }  
+  }
 
   Widget homePage(int nrp) {
     if (homePageLoading) {
@@ -168,7 +167,7 @@ Widget showClass(context) {
     children: [
       Row(
         children: [
-          Text('Today Classes',
+          Text('Today\'s Courses',
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!

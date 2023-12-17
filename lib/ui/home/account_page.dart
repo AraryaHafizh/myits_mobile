@@ -21,7 +21,7 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   bool languageVal = true;
-  bool notifVal = true;
+  bool notifVal = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _AccountPageState extends State<AccountPage> {
   void initState() {
     super.initState();
     refetchAcc(context, setState);
-  }  
+  }
 
   Widget bodyPage() {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -200,12 +200,12 @@ class _AccountPageState extends State<AccountPage> {
           inactiveThumbColor: Theme.of(context).colorScheme.onPrimary,
           onChanged: (bool value) {
             setState(() {
-              notifVal = false;
+              notifVal = true;
             });
             Future.delayed(const Duration(milliseconds: 300), () {
               wipAlertDialog(context);
               setState(() {
-                notifVal = true;
+                notifVal = false;
               });
             });
           },

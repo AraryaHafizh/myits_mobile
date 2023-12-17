@@ -51,7 +51,6 @@ Future<void> submit(context, question, nrp) async {
   agendaProvider.dataForGPT();
   announcementProvider.dataForGPT();
   chatbot.updateLoadingState();
-  print('agenda: ${userHandler.dataGPT}');
 
   try {
     final response =
@@ -81,13 +80,15 @@ Future<void> submit(context, question, nrp) async {
     } else {
       throw Exception('Failed to load response');
     }
-  } catch (e) {
-    if (e is DioException && e.response != null) {
-      debugPrint('Response Data: ${e.response!.data}');
-    } else {
-      debugPrint('Error $e');
-    }
-  } finally {
+  } 
+  // catch (e) {
+  //   if (e is DioException && e.response != null) {
+  //     // debugPrint('Response Data: ${e.response!.data}');
+  //   } else {
+  //     // debugPrint('Error $e');
+  //   }
+  // } 
+  finally {
     chatbot.updateLoadingState();
   }
   // chatbot.updateLoadingState();
